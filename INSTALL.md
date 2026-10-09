@@ -3,7 +3,7 @@
 ## 一、直接安装（推荐）
 
 ```bash
-dsh plugin --profile desktop add ./dsh-jt-startup-0.2.19.tgz
+dsh plugin --profile desktop add ./dsh-jt-startup-0.3.0.tgz
 ```
 
 Windows 上双击 `安装.cmd` 一样（自动 npm pack 并安装到检测到的 profile）。
@@ -34,10 +34,10 @@ dsh plugin --profile desktop remove dsh-startup-screen
 
 重启后，**没带 token** 访问插件路由：
 
-- `/jt-startup/splash.js` 返回 **401** → 路由已注册（401 是信任栅栏，正常）
+- `/jt-startup/splash.js`（或 `/jt-startup/w40k.js`）返回 **401** → 路由已注册（401 是信任栅栏，正常）
 - 返回 **404** → 没装成功，或没重启
 
-设置页应出现「启动动画 · 极兔」一节；点其中的「保存并立即预览」可直接重播。
+设置页应出现「启动动画」一节（含「动画风格」选择：极兔干线 / 战锤40K）；点其中的「保存并立即预览」可直接重播。
 
 ## 三、桌面端注意
 

@@ -1,0 +1,583 @@
+/* ============================================================================
+ * dsh-jt-startup — 战锤40K 风格启动界面样式「机神祷文 BENEDICTIO OMNISSIAH」
+ * ----------------------------------------------------------------------------
+ * 美术语言与极兔干线完全不同：哥特暗色 × 羊皮纸 × 黄铜金 × 暗腥红。
+ * 中文用宋体（木刻/礼仪感），西文用 Palatino/Times 衬线（大字距小号大写）。
+ * 阶段可见性由根节点 jtw-p0…jtw-p6 控制；品牌暗红由运行时写入 --jtw-blood。
+ * 协议类（jts-root / jts-boot / jts-lock / jts-gone）与极兔版共用语义，
+ * 但本文件不依赖 splash.css —— 两套 CSS 永远只有一套被加载。
+ * ========================================================================== */
+
+.jtw-root {
+  --jtw-bg: #0a0807;
+  --jtw-ink: #d8c9a3;
+  --jtw-soft: rgba(216, 201, 163, .58);
+  --jtw-dim: rgba(216, 201, 163, .38);
+  --jtw-line: rgba(185, 138, 47, .30);
+  --jtw-gold: #b98a2f;
+  --jtw-gold-hi: #e6c35c;
+  --jtw-blood: #8f1f1f;
+  --jtw-ember: #d4a017;
+  --jtw-panel: rgba(18, 13, 10, .88);
+  --jtw-serif: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, "Times New Roman", serif;
+  --jtw-zh: "SimSun", "宋体", "STSong", "NSimSun", serif;
+  --jtw-mono: "Cascadia Code", "Consolas", ui-monospace, monospace;
+
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  background: var(--jtw-bg);
+  color: var(--jtw-ink);
+  font-family: var(--jtw-serif);
+  overflow: hidden;
+  transition: opacity .8s ease, background .5s ease;
+  user-select: none;
+  cursor: default;
+}
+
+.jtw-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 教堂暗角：比极兔版更重的边缘压暗，中心留烛光 */
+.jtw-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 62% 55% at 50% 46%, transparent 40%, rgba(0, 0, 0, .38) 78%, rgba(0, 0, 0, .66) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, .30) 0%, transparent 14%, transparent 86%, rgba(0, 0, 0, .34) 100%);
+}
+
+/* ── 顶栏铭牌 ──────────────────────────────────────────────────────────── */
+.jtw-mast {
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.jtw-live .jtw-mast { opacity: 1; transform: none; }
+.jtw-cog {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  color: var(--jtw-gold);
+  filter: drop-shadow(0 0 4px rgba(185, 138, 47, .35));
+}
+.jtw-cog svg { display: block; width: 100%; height: 100%; }
+.jtw-mastText b {
+  display: block;
+  font-family: var(--jtw-zh);
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 5px;
+}
+.jtw-mastText span {
+  display: block;
+  margin-top: 3px;
+  font: 8.5px/1.8 var(--jtw-serif);
+  letter-spacing: 2.6px;
+  color: var(--jtw-dim);
+  text-transform: uppercase;
+}
+.jtw-rev {
+  margin-left: 8px;
+  padding-left: 14px;
+  border-left: 1px solid var(--jtw-line);
+  font: 8.5px/1.7 var(--jtw-serif);
+  letter-spacing: 2.2px;
+  color: var(--jtw-dim);
+}
+
+.jtw-stepcount {
+  position: absolute;
+  top: 28px;
+  right: 30px;
+  font: 10px var(--jtw-serif);
+  letter-spacing: 2.6px;
+  color: var(--jtw-dim);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .7s ease;
+}
+.jtw-live .jtw-stepcount { opacity: 1; }
+
+/* ── 中央祷文（阶段标语）───────────────────────────────────────────────── */
+.jtw-stage {
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  transform: translateX(-50%);
+  width: min(88%, 760px);
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+}
+.jtw-kicker {
+  font: 10.5px var(--jtw-serif);
+  font-style: italic;
+  letter-spacing: 4px;
+  color: var(--jtw-gold);
+  min-height: 17px;
+  text-transform: uppercase;
+}
+.jtw-title {
+  margin: 14px 0 12px;
+  font-family: var(--jtw-zh);
+  font-size: clamp(26px, 4vw, 50px);
+  font-weight: 400;
+  letter-spacing: 12px;
+  text-indent: 12px;
+  line-height: 1.25;
+  color: #f0e4c8;
+  /* 哥特铭牌：贴字宽度的暗牌 + 金线勾边，星空再亮也不吃字 */
+  display: inline-block;
+  background: rgba(10, 7, 5, .78);
+  border: 1px solid rgba(185, 138, 47, .55);
+  border-radius: 2px;
+  padding: 8px 26px 9px;
+  box-shadow: inset 0 0 26px rgba(0, 0, 0, .5), 0 0 0 1px rgba(10, 8, 7, .8), 0 4px 18px rgba(0, 0, 0, .35);
+  text-shadow: 0 0 18px rgba(185, 138, 47, .22);
+}
+.jtw-note {
+  margin: 0 auto;
+  max-width: 560px;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .85), 0 0 4px rgba(0, 0, 0, .6);
+  font-family: var(--jtw-zh);
+  font-size: 12px;
+  letter-spacing: 2px;
+  line-height: 1.9;
+  color: var(--jtw-soft);
+}
+/* 标题组下的小徽线：菱形 + 双线，替代极兔的红色单线 */
+.jtw-note::after {
+  content: "◆";
+  display: block;
+  font-size: 7px;
+  letter-spacing: 0;
+  color: var(--jtw-gold);
+  margin: 15px auto 0;
+  padding-top: 9px;
+  border-top: 1px solid var(--jtw-line);
+  width: 132px;
+  text-indent: 0;
+}
+.jtw-title, .jtw-note {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform .8s cubic-bezier(.2, .7, .2, 1);
+}
+.jtw-title.jtw-in, .jtw-note.jtw-in { opacity: 1; transform: none; }
+.jtw-p6 .jtw-stage { visibility: hidden; }
+
+/* ── 密卷身份卡（阶段 3 · 审查核验）────────────────────────────────────── */
+.jtw-sealcard {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 46px);
+  transform: translateX(-50%) translateY(14px);
+  width: 300px;
+  background:
+    linear-gradient(160deg, rgba(216, 197, 155, .045), rgba(216, 197, 155, .015)),
+    var(--jtw-panel);
+  border: 1px solid var(--jtw-line);
+  box-shadow:
+    inset 0 0 0 4px rgba(10, 8, 7, .55),
+    inset 0 0 0 5px var(--jtw-line),
+    0 18px 46px rgba(0, 0, 0, .5);
+  text-align: left;
+  padding: 15px 20px 13px;
+  opacity: 0;
+  transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform .8s cubic-bezier(.2, .7, .2, 1);
+}
+.jtw-p3 .jtw-sealcard { opacity: 1; transform: translateX(-50%) translateY(0); }
+.jtw-p4 .jtw-sealcard, .jtw-p5 .jtw-sealcard, .jtw-p6 .jtw-sealcard { opacity: 0; }
+.jtw-sealcard div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 8px 0;
+  border-bottom: 1px dotted rgba(185, 138, 47, .25);
+  font-size: 10.5px;
+}
+.jtw-sealcard div:last-child { border-bottom: 0; }
+.jtw-sealcard span {
+  font-family: var(--jtw-zh);
+  letter-spacing: 3px;
+  color: var(--jtw-dim);
+}
+.jtw-sealcard b {
+  font: 500 11px var(--jtw-mono);
+  letter-spacing: .4px;
+  overflow-wrap: anywhere;
+  text-align: right;
+  color: var(--jtw-ink);
+}
+.jtw-sealcard div:first-child b { color: var(--jtw-gold-hi); }
+
+/* ── 授权仪式 · 琥珀磷光思考机终端（阶段 4–5）─────────────────────────── */
+.jtw-term {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  transform: translate(-50%, -50%);
+  width: min(84%, 720px);
+  background: rgba(9, 7, 5, .92);
+  border: 1px solid #4a3617;
+  box-shadow:
+    inset 0 0 42px rgba(212, 160, 23, .05),
+    0 0 0 4px rgba(9, 7, 5, .9),
+    0 0 0 5px rgba(74, 54, 23, .5),
+    0 22px 60px rgba(0, 0, 0, .55);
+  opacity: 0;
+  transition: opacity .7s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.jtw-p4 .jtw-term { opacity: 1; animation: jtwCrtJitter 4.2s steps(12) infinite; }
+.jtw-p5 .jtw-term { opacity: .13; animation: none; }
+.jtw-p6 .jtw-term { opacity: 0; }
+@keyframes jtwCrtJitter {
+  0%, 92% { transform: translate(-50%, -50%); }
+  93% { transform: translate(calc(-50% - 1px), -50%); }
+  95% { transform: translate(calc(-50% + 1px), calc(-50% + .5px)); }
+  97% { transform: translate(-50%, calc(-50% - .5px)); }
+  100% { transform: translate(-50%, -50%); }
+}
+.jtw-termHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 9px 14px;
+  border-bottom: 1px solid #3a2c14;
+  font: 11px var(--jtw-mono);
+  letter-spacing: .6px;
+  color: #9a7a1f;
+}
+.jtw-termCount b { color: var(--jtw-ember); font-weight: 500; }
+.jtw-termBody {
+  height: 168px;
+  overflow: hidden;
+  padding: 10px 14px 6px;
+  font: 12px/1.95 var(--jtw-mono);
+  color: #d4a017;
+  text-shadow: 0 0 6px rgba(212, 160, 23, .38);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 26px);
+  mask-image: linear-gradient(180deg, transparent 0, #000 26px);
+}
+.jtw-termLine {
+  display: flex;
+  gap: 9px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+.jtw-termLine.jtw-in { opacity: 1; transform: none; }
+.jtw-termLine.jtw-dim { opacity: .5; }
+.jtw-termMark { flex: none; width: 12px; color: #8a6d15; }
+.jtw-termLine.jtw-ok .jtw-termMark { color: #e6c35c; }
+.jtw-termLine.jtw-warn .jtw-termMark { color: var(--jtw-blood); filter: brightness(1.6); }
+.jtw-termText { overflow: hidden; text-overflow: ellipsis; }
+.jtw-termFoot {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 8px 14px 10px;
+  border-top: 1px solid #3a2c14;
+  font: 10px var(--jtw-mono);
+  letter-spacing: .8px;
+  color: #9a7a1f;
+}
+.jtw-termGrant { color: var(--jtw-ember); opacity: .18; transition: opacity .4s ease; }
+.jtw-termGrant.jtw-on { opacity: 1; text-shadow: 0 0 10px rgba(212, 160, 23, .55); }
+/* 磷光扫描线（盖在终端上，不盖全屏） */
+.jtw-term::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .16) 0 1px, transparent 1px 3px);
+}
+@media (prefers-reduced-motion: reduce) { .jtw-p4 .jtw-term { animation: none; } }
+
+/* ── 左下角：二进制圣歌寄存器 ──────────────────────────────────────────── */
+.jtw-log {
+  position: absolute;
+  left: 28px;
+  bottom: 32px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .7s ease;
+}
+.jtw-live .jtw-log { opacity: 1; }
+.jtw-p6 .jtw-log { opacity: .3; }
+.jtw-logBits { display: flex; gap: 4px; margin-bottom: 8px; }
+.jtw-logBits i {
+  width: 10px;
+  height: 5px;
+  background: rgba(185, 138, 47, .16);
+}
+.jtw-logBits i.jtw-on { background: var(--jtw-gold); box-shadow: 0 0 5px rgba(185, 138, 47, .5); }
+.jtw-logLine {
+  font: 10px var(--jtw-serif);
+  letter-spacing: 2.4px;
+  color: var(--jtw-dim);
+  text-transform: uppercase;
+}
+.jtw-logState {
+  margin-top: 4px;
+  font: 9.5px var(--jtw-serif);
+  font-style: italic;
+  letter-spacing: 1.8px;
+  color: var(--jtw-gold);
+}
+
+/* ── 底部双语字幕 ──────────────────────────────────────────────────────── */
+.jtw-subtitle {
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .7s ease;
+  width: 64%;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .85), 0 0 4px rgba(0, 0, 0, .6);
+}
+.jtw-live .jtw-subtitle { opacity: 1; }
+.jtw-p6 .jtw-subtitle { opacity: .3; }
+.jtw-subZh {
+  display: block;
+  font-family: var(--jtw-zh);
+  font-size: 10.5px;
+  letter-spacing: 3px;
+  color: var(--jtw-soft);
+}
+.jtw-subEn {
+  display: block;
+  margin-top: 5px;
+  font: 8px var(--jtw-serif);
+  font-style: italic;
+  letter-spacing: 2.4px;
+  color: var(--jtw-dim);
+  text-transform: uppercase;
+}
+
+/* ── 终幕祝福（阶段 6 · 机神庇佑）──────────────────────────────────────── */
+.jtw-welcome {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: min(92vw, 1180px);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+}
+.jtw-p6 .jtw-welcome { opacity: 1; transition: opacity 1s cubic-bezier(.2, .7, .2, 1) .4s; }
+.jtw-w1 {
+  font: 11px var(--jtw-serif);
+  font-style: italic;
+  letter-spacing: 5px;
+  color: var(--jtw-gold);
+  text-transform: uppercase;
+}
+.jtw-w2 {
+  margin: 18px 0 14px;
+  max-width: min(80vw, 1100px);
+  font-family: var(--jtw-zh);
+  font-size: clamp(24px, 3.3vw, 42px);
+  font-weight: 400;
+  letter-spacing: 7px;
+  text-indent: 7px;
+  color: var(--jtw-ink);
+  text-shadow: 0 0 26px rgba(185, 138, 47, .28);
+}
+.jtw-w2::after {
+  content: "✦";
+  display: block;
+  font-size: 8px;
+  letter-spacing: 0;
+  text-indent: 0;
+  color: var(--jtw-gold);
+  margin: 20px auto 0;
+  padding-top: 11px;
+  border-top: 1px solid var(--jtw-line);
+  width: 120px;
+}
+.jtw-w3 {
+  font: 10.5px var(--jtw-mono);
+  letter-spacing: 2px;
+  color: var(--jtw-soft);
+}
+.jtw-w5 {
+  margin: 2px 0 16px;
+  font: italic 10.5px var(--jtw-serif);
+  letter-spacing: 2px;
+  color: var(--jtw-dim);
+  text-transform: uppercase;
+}
+.jtw-w5::before, .jtw-w5::after {
+  content: "—";
+  margin: 0 10px;
+  color: var(--jtw-gold);
+  opacity: .6;
+}
+.jtw-w4 {
+  margin-top: 10px;
+  font: 9px var(--jtw-serif);
+  font-style: italic;
+  letter-spacing: 2.6px;
+  color: var(--jtw-dim);
+  text-transform: uppercase;
+}
+.jtw-w4 span { color: var(--jtw-gold); }
+
+/* ── 确认节点：密印按钮（阶段 2 / 3）──────────────────────────────────── */
+.jtw-action {
+  position: absolute;
+  left: 50%;
+  /* 密卷场景内容（纸底）最低到视口 80% 处：按钮压到 8% 才与纸/签名行/字幕三段错开 */
+  bottom: 8%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+  z-index: 3;
+}
+.jtw-action.jtw-in { opacity: 1; pointer-events: auto; }
+.jtw-btn {
+  font-family: var(--jtw-zh);
+  font-size: 13.5px;
+  letter-spacing: 4px;
+  text-indent: 4px;
+  color: var(--jtw-ink);
+  background: linear-gradient(180deg, rgba(38, 27, 16, .9), rgba(20, 14, 9, .9));
+  border: 1px solid var(--jtw-gold);
+  box-shadow:
+    inset 0 0 0 3px rgba(10, 8, 7, .8),
+    inset 0 0 0 4px rgba(185, 138, 47, .45);
+  padding: 13px 34px;
+  cursor: pointer;
+  min-width: 196px;
+  transition: color .25s ease, box-shadow .25s ease;
+}
+
+.jtw-btn {
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.jtw-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--jtw-gold);
+  box-shadow: 0 0 22px rgba(185, 138, 47, .38), inset 0 0 14px rgba(212, 160, 23, .18);
+}
+.jtw-btn:active { transform: translateY(0); }
+.jtw-btn:hover {
+  color: var(--jtw-gold-hi);
+  box-shadow:
+    inset 0 0 0 3px rgba(10, 8, 7, .8),
+    inset 0 0 0 4px var(--jtw-gold),
+    0 0 24px rgba(185, 138, 47, .28);
+}
+.jtw-btn .jtw-btnEn {
+  display: block;
+  margin-top: 5px;
+  font: 8.5px var(--jtw-serif);
+  letter-spacing: 3px;
+  text-indent: 3px;
+  color: var(--jtw-dim);
+  text-transform: uppercase;
+}
+.jtw-btn.jtw-pulse { animation: jtwPulse calc(1.8s / var(--jtw-speed, 1)) ease-in-out infinite; }
+@keyframes jtwPulse {
+  0%, 100% { box-shadow: inset 0 0 0 3px rgba(10, 8, 7, .8), inset 0 0 0 4px rgba(185, 138, 47, .45), 0 0 0 0 rgba(0, 0, 0, 0); }
+  50% { box-shadow: inset 0 0 0 3px rgba(10, 8, 7, .8), inset 0 0 0 4px rgba(185, 138, 47, .45), 0 0 26px 2px rgba(143, 31, 31, .38); }
+}
+.jtw-hint {
+  margin-top: 13px;
+  font-size: 10px;
+  color: var(--jtw-dim);
+}
+.jtw-hint kbd {
+  font: 9px var(--jtw-mono);
+  border: 1px solid var(--jtw-line);
+  padding: 1px 5px;
+}
+
+/* ── 跳过 / 进度 ───────────────────────────────────────────────────────── */
+.jtw-skip {
+  position: absolute;
+  right: 30px;
+  bottom: 32px;
+  font: 10px var(--jtw-serif);
+  letter-spacing: 2.4px;
+  color: var(--jtw-dim);
+  cursor: pointer;
+  padding: 8px 10px;
+  opacity: .8;
+  transition: opacity .5s ease, color .2s ease;
+  z-index: 4;
+  pointer-events: auto;
+}
+.jtw-skip:hover { color: var(--jtw-gold-hi); }
+
+.jtw-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: rgba(185, 138, 47, .12);
+  overflow: hidden;
+}
+.jtw-progress i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--jtw-gold), var(--jtw-gold-hi));
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* 揭幕退场（finish() 加 jts-gone —— 协议类，样式在本侧定义） */
+.jtw-root.jts-gone { opacity: 0; }
+
+/* ── 小屏适配 ──────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .jtw-mast { top: 16px; left: 16px; gap: 9px; }
+  .jtw-cog { width: 21px; height: 21px; }
+  .jtw-mastText b { font-size: 13px; letter-spacing: 3px; }
+  .jtw-rev { display: none; }
+  .jtw-stepcount { top: 20px; right: 16px; }
+  .jtw-stage { top: 13%; }
+  .jtw-title { letter-spacing: 7px; text-indent: 7px; }
+  .jtw-sealcard { width: 250px; top: calc(50% + 30px); }
+  .jtw-term { width: 90%; }
+  .jtw-termBody { height: 138px; font-size: 10.5px; }
+  .jtw-log { left: 16px; bottom: 24px; }
+  .jtw-logBits i { width: 8px; }
+  .jtw-skip { right: 14px; bottom: 24px; }
+  .jtw-subtitle { display: none; }
+  .jtw-action { bottom: 19%; }
+}
+
+/* ── 减弱动效 ──────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .jtw-root, .jtw-root * { transition-duration: .01s !important; animation: none !important; }
+  .jtw-btn.jtw-pulse { animation: none !important; }
+}

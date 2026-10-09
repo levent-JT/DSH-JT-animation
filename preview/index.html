@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>dsh-jt-startup · 极兔研发控制台 启动动画离线预览</title>
+<title>dsh-jt-startup · 双风格启动动画离线预览</title>
 
-<!-- 直接复用插件自己的运行时与样式，改 lib/ 下的文件刷新即可看到 -->
-<link rel="stylesheet" href="../lib/splash.css">
+<!-- 运行时样式与脚本按「风格」在下方脚本里动态挂载（?style=w40k 可直达 40K） -->
+<link id="startCss" rel="stylesheet" href="../lib/splash.css">
 
 <style>
   html, body { margin: 0; height: 100%; overflow: hidden; }
@@ -65,6 +65,7 @@
   #console button.act:hover { border-color: #ff5a4d; color: #ff8a7d; }
   #console .tip { font-size: 10.5px; color: #8d9aa2; line-height: 1.6; }
   #console kbd { font: 10px Consolas, monospace; border: 1px solid rgba(255,255,255,.2); border-radius: 3px; padding: 0 4px; }
+  #console .styleLabel { color: #e6c35c; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -88,52 +89,70 @@
 </div>
 
 <div id="console" class="open">
-  <header><b>研发控制台 · 预览台</b><button id="fold" title="收起/展开">—</button></header>
+  <header><b>双风格 · 预览台</b><button id="fold" title="收起/展开">—</button></header>
   <div class="body">
-    <div class="row2">
+    <label class="styleLabel">动画风格
+      <select id="inStyle">
+        <option value="jt">极兔干线 · Express Trunk</option>
+        <option value="w40k">战锤40K · 机神祷文</option>
+      </select>
+    </label>
+    <div class="row2" id="jtFields">
       <label>访问身份<input id="inIdentity" type="text" value="JT-Levent"></label>
       <label>工牌号<input id="inId" type="text" value="JT01919561"></label>
     </div>
-    <div class="row2">
+    <div id="jtThemeRow" class="row2" style="display:none">
       <label>主题
         <select id="inTheme">
           <option value="light">暖白图纸</option>
           <option value="dark">深夜分拣场</option>
         </select>
       </label>
-      <label>速度 <span id="speedVal">1.00×</span>
-        <input id="inSpeed" type="range" min="0.5" max="2" step="0.05" value="1">
-      </label>
     </div>
-    <label class="check"><input id="inDemo" type="checkbox" checked>演示清单（离线模拟装车数据）</label>
+    <div id="w40kFields" style="display:none; flex-direction:column; gap:8px">
+      <div class="row2">
+        <label>名讳<input id="inWName" type="text" value="JT-Levent"></label>
+        <label>圣秩<input id="inWRank" type="text" value="TECH-ADEPT"></label>
+      </div>
+      <div class="row2">
+        <label>驻地<input id="inWStation" type="text" value="MACRAGGE · REALM OF ULTRAMAR"></label>
+        <label>编序<input id="inWCipher" type="text" value="JT01919561"></label>
+      </div>
+    </div>
+    <label>速度 <span id="speedVal">1.00×</span>
+      <input id="inSpeed" type="range" min="0.5" max="2" step="0.05" value="1">
+    </label>
+    <label class="check"><input id="inDemo" type="checkbox" checked>演示清单（离线模拟授权数据）</label>
     <div class="btns">
       <button class="act" id="btnReplay">重播</button>
       <button class="act" id="btnSkip">跳过</button>
     </div>
     <div class="tip">
-      离线预览说明：<kbd>Enter</kbd>/<kbd>Space</kbd>/点击 = 确认节点；横向拖动旋转背景航线网；
-      <kbd>Esc</kbd> 跳过。正式环境里「权限认证」读取 ~/.dsh 真实 skills 与插件清单并逐条授权，
+      离线预览说明：切换风格即时换装（跨风格热切换走的就是设置页「立即预览」的同一套逻辑）；
+      <kbd>Enter</kbd>/<kbd>Space</kbd>/点击 = 确认节点（极兔可横向拖动旋转地球）；
+      <kbd>Esc</kbd> 跳过。正式环境里「权限认证/授权仪式」读取 ~/.dsh 真实 skills 与插件清单，
       此处 file:// 无法访问宿主接口，勾选「演示清单」可看该阶段效果；
-      URL 加 <kbd>?motion=full</kbd> 可在系统"减弱动态效果"下仍预览完整节奏。
+      URL 加 <kbd>?motion=full</kbd> 可在系统"减弱动态效果"下仍预览完整节奏，
+      <kbd>?style=w40k</kbd> 直接进 40K。
     </div>
   </div>
 </div>
 
 <script>
-  /* 离线预览：直接以相对路径挂载插件运行时（不加查询串，file:// 下同样可用）。
+  /* 离线预览：按「风格」动态挂载插件运行时（相对路径，file:// 下同样可用）。
      ?motion=full 可强制完整动效（系统开了"减弱动态效果"时预览用）。 */
   if (location.search.indexOf('motion=full') !== -1) {
     window.matchMedia = function (q) {
       return { matches: false, media: q, addEventListener: function () {}, removeEventListener: function () {} }
     }
   }
-  window.__JT_STARTUP_SCRIPT_URL__ = '../lib/splash.js'
-  window.__JT_STARTUP__ = {
-    enabled: true, mode: 'always', theme: 'light', speed: 1,
-    requireInteraction: true, allowSkip: true, sound: true, soundVolume: 0.5,
-    identity: 'JT-Levent', identityId: 'JT01919561',
-    hub: 'SHANGHAI · GLOBAL HQ', inventory: true, background: true, accent: '#d8232a'
+
+  var START_STYLE = location.search.indexOf('style=w40k') !== -1 ? 'w40k' : 'jt'
+  var STYLE_FILE = {
+    jt: { css: '../lib/splash.css', js: '../lib/splash.js' },
+    w40k: { css: '../lib/w40k.css', js: '../lib/w40k.js' }
   }
+
   /* 演示清单：结构和宿主 /jt-startup/inventory.json 一致，明确标注"演示" */
   function demoInventory() {
     return {
@@ -145,7 +164,7 @@
         { name: 'delegate-code-to-agent', source: '~/.dsh/skills/delegate-code-to-agent' }
       ],
       plugins: [
-        { name: 'dsh-jt-startup', version: '0.1.0', tools: null, source: '~/.dsh/profiles/desktop' },
+        { name: 'dsh-jt-startup', version: '0.3.0', tools: null, source: '~/.dsh/profiles/desktop' },
         { name: 'dsh-better-sidebar', version: '0.24.1', tools: null, source: '~/.dsh/profiles/desktop' },
         { name: 'dsh-free-search', version: '0.8.1', tools: null, source: '~/.dsh/profiles/desktop' },
         { name: 'dshmarket', version: '1.66.11', tools: null, source: '~/.dsh/profiles/desktop' },
@@ -153,38 +172,81 @@
       ]
     }
   }
-  window.__JT_STARTUP_DEMO__ = demoInventory()
 
   var $ = function (id) { return document.getElementById(id) }
+
+  function currentConfig() {
+    var style = $('inStyle').value
+    var base = {
+      enabled: true, mode: 'always', style: style,
+      speed: Number($('inSpeed').value),
+      requireInteraction: true, allowSkip: true, sound: true, soundVolume: 0.5,
+      inventory: true, background: true
+    }
+    if (style === 'w40k') {
+      return Object.assign(base, {
+        accent: '#8f1f1f',
+        identity: $('inWName').value.trim() || 'JT-DEVELOPER',
+        rank: $('inWRank').value.trim() || 'TECH-ADEPT',
+        station: $('inWStation').value.trim() || 'RYZA · FORGE WORLD',
+        cipher: $('inWCipher').value.trim() || 'JT0001'
+      })
+    }
+    return Object.assign(base, {
+      theme: $('inTheme').value,
+      accent: '#d8232a',
+      identity: $('inIdentity').value.trim() || 'JT-DEVELOPER',
+      identityId: $('inId').value.trim() || 'JT0001',
+      hub: 'SHANGHAI · GLOBAL HQ'
+    })
+  }
+
+  function syncFieldVisibility() {
+    var isW = $('inStyle').value === 'w40k'
+    $('jtFields').style.display = isW ? 'none' : 'grid'
+    $('jtThemeRow').style.display = isW ? 'none' : 'grid'
+    $('w40kFields').style.display = isW ? 'flex' : 'none'
+  }
+
+  /** 挂载指定风格：换 CSS link、重挂 runtime 脚本（与设置页跨风格预览同款协议）。 */
+  function mountStyle(style, cfg) {
+    var files = STYLE_FILE[style] || STYLE_FILE.jt
+    /* 收旧画面：立即摘根（旧 runtime finish 的延迟移除带 parentNode 守卫，不会误杀新根） */
+    var api = window.__JT_STARTUP_API__
+    if (api && typeof api.finish === 'function') { try { api.finish() } catch (e) { /* noop */ } }
+    var old = document.getElementById('jt-startup-root')
+    if (old && old.parentNode) old.parentNode.removeChild(old)
+    $('startCss').href = files.css
+    window.__JT_STARTUP__ = cfg
+    window.__JT_STARTUP_SCRIPT_URL__ = files.js
+    window.__JT_STARTUP_DEMO__ = $('inDemo').checked ? demoInventory() : null
+    try { delete window.__JT_STARTUP_LOADED__ } catch (e) { window.__JT_STARTUP_LOADED__ = undefined }
+    var s = document.createElement('script')
+    s.src = files.js + '?t=' + Date.now()
+    document.body.appendChild(s)
+  }
+
+  $('inStyle').value = START_STYLE
+  syncFieldVisibility()
+  $('inStyle').addEventListener('change', function () {
+    syncFieldVisibility()
+    mountStyle($('inStyle').value, currentConfig())
+  })
   $('fold').addEventListener('click', function () { $('console').classList.toggle('open') })
   $('speedVal').textContent = Number($('inSpeed').value).toFixed(2) + '×'
   $('inSpeed').addEventListener('input', function () {
     $('speedVal').textContent = Number(this.value).toFixed(2) + '×'
   })
-
-  function currentConfig() {
-    return {
-      enabled: true, mode: 'always',
-      theme: $('inTheme').value,
-      speed: Number($('inSpeed').value),
-      requireInteraction: true, allowSkip: true, sound: true, soundVolume: 0.5,
-      identity: $('inIdentity').value.trim() || 'JT-DEVELOPER',
-      identityId: $('inId').value.trim() || 'JT0001',
-      hub: 'SHANGHAI · GLOBAL HQ', inventory: true, background: true, accent: '#d8232a'
-    }
-  }
   $('btnReplay').addEventListener('click', function () {
-    window.__JT_STARTUP__ = currentConfig()
-    window.__JT_STARTUP_DEMO__ = $('inDemo').checked ? demoInventory() : null
-    var api = window.__JT_STARTUP_API__
-    if (api && typeof api.replay === 'function') api.replay()
-    else location.reload()
+    mountStyle($('inStyle').value, currentConfig())
   })
   $('btnSkip').addEventListener('click', function () {
     var api = window.__JT_STARTUP_API__
     if (api && typeof api.skip === 'function') api.skip()
   })
+
+  /* 初始挂载（无旧画面可收，mountStyle 的收尾逻辑自然空转） */
+  mountStyle(START_STYLE, currentConfig())
 </script>
-<script src="../lib/splash.js"></script>
 </body>
 </html>
