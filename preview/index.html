@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dsh-jt-startup · 极兔研发控制台 启动动画离线预览</title>
+
+<!-- 直接复用插件自己的运行时与样式，改 lib/ 下的文件刷新即可看到 -->
+<link rel="stylesheet" href="../lib/splash.css">
+
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; }
+  body {
+    background: #f2f1ed;
+    font-family: "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+    color: #2a2c2e;
+  }
+
+  /* ── 幕后的"DSH 主界面"假背景：只为让揭幕那一刻有东西可看 ─────────── */
+  #mockApp { position: fixed; inset: 0; z-index: 1; display: flex; background: #fafaf8; }
+  #mockApp .side { width: 240px; background: #efefee; border-right: 1px solid #e2e2e0; padding: 14px 12px; }
+  #mockApp .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #26282a; margin-bottom: 10px; }
+  #mockApp .mark { background: #d8232a; color: #fff; font-size: 12px; padding: 4px 6px; border-radius: 3px; }
+  #mockApp .item { font-size: 13px; color: #55565a; padding: 7px 9px; border-radius: 8px; }
+  #mockApp .item.on { background: #fff; color: #1d1d1f; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+  #mockApp .main { flex: 1; display: flex; flex-direction: column; }
+  #mockApp .top { height: 46px; border-bottom: 1px solid #e6e6e4; display: flex; align-items: center; padding: 0 18px; font-size: 13px; color: #6a6b6f; }
+  #mockApp .body { flex: 1; padding: 28px 34px; display: flex; flex-direction: column; gap: 14px; }
+  #mockApp .bubble { max-width: 620px; font-size: 13.5px; line-height: 1.75; }
+  #mockApp .bubble.me { align-self: flex-end; background: #fbe9e9; border-radius: 12px; padding: 10px 14px; }
+  #mockApp .bubble.ai { background: #fff; border: 1px solid #e8e8e6; border-radius: 12px; padding: 14px 16px; }
+  #mockApp .mockTag { position: absolute; right: 14px; bottom: 12px; font-size: 11px; color: #a9aaae; letter-spacing: .08em; }
+
+  /* ── 预览控制台（浮在启动动画之上，方便边看边改）───────────────────── */
+  #console {
+    position: fixed; right: 16px; top: 16px; width: 300px; z-index: 2147483600;
+    background: rgba(20, 22, 26, .93); border: 1px solid rgba(255,255,255,.14);
+    border-radius: 12px; backdrop-filter: blur(8px);
+    box-shadow: 0 18px 50px rgba(0,0,0,.45);
+    font-size: 12.5px; color: #e8eaec; overflow: hidden;
+  }
+  #console header { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,.1); display: flex; justify-content: space-between; align-items: center; }
+  #console header b { font-size: 12px; letter-spacing: 1px; }
+  #console header button { background: none; border: 0; color: #9fb0ba; cursor: pointer; font-size: 15px; padding: 0 2px; }
+  #console .body { padding: 12px 14px; display: none; flex-direction: column; gap: 10px; }
+  #console.open .body { display: flex; }
+  #console label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; color: #aab6bd; }
+  #console input[type=text] {
+    border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.06); color: #eef2f4;
+    border-radius: 7px; padding: 6px 9px; font: 12px Consolas, monospace; outline: none;
+  }
+  #console input[type=range] { width: 100%; accent-color: #ff5a4d; }
+  #console .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  #console select {
+    border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.06); color: #eef2f4;
+    border-radius: 7px; padding: 6px 9px; font-size: 12px; outline: none;
+  }
+  #console .check { flex-direction: row; align-items: center; gap: 7px; }
+  #console .check input { accent-color: #ff5a4d; }
+  #console .btns { display: flex; gap: 8px; margin-top: 2px; }
+  #console button.act {
+    flex: 1; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08); color: #eef2f4;
+    border-radius: 8px; padding: 7px 0; font-size: 12px; cursor: pointer;
+  }
+  #console button.act:hover { border-color: #ff5a4d; color: #ff8a7d; }
+  #console .tip { font-size: 10.5px; color: #8d9aa2; line-height: 1.6; }
+  #console kbd { font: 10px Consolas, monospace; border: 1px solid rgba(255,255,255,.2); border-radius: 3px; padding: 0 4px; }
+</style>
+</head>
+<body>
+
+<div id="mockApp">
+  <div class="side">
+    <div class="brand"><span class="mark">J&amp;T</span>极兔速递 · DSH</div>
+    <div class="item on">新建会话</div>
+    <div class="item">干线排班表</div>
+    <div class="item">枢纽看板</div>
+    <div class="item">设置</div>
+  </div>
+  <div class="main">
+    <div class="top">极速干线 · 工作区</div>
+    <div class="body">
+      <div class="bubble me">把今天的干线排班拉出来</div>
+      <div class="bubble ai">已就绪。启动动画揭幕之后看到的就是这里。</div>
+    </div>
+  </div>
+  <div class="mockTag">MOCK WORKSPACE · 预览假背景</div>
+</div>
+
+<div id="console" class="open">
+  <header><b>研发控制台 · 预览台</b><button id="fold" title="收起/展开">—</button></header>
+  <div class="body">
+    <div class="row2">
+      <label>访问身份<input id="inIdentity" type="text" value="JT-Levent"></label>
+      <label>工牌号<input id="inId" type="text" value="JT01919561"></label>
+    </div>
+    <div class="row2">
+      <label>主题
+        <select id="inTheme">
+          <option value="light">暖白图纸</option>
+          <option value="dark">深夜分拣场</option>
+        </select>
+      </label>
+      <label>速度 <span id="speedVal">1.00×</span>
+        <input id="inSpeed" type="range" min="0.5" max="2" step="0.05" value="1">
+      </label>
+    </div>
+    <label class="check"><input id="inDemo" type="checkbox" checked>演示清单（离线模拟装车数据）</label>
+    <div class="btns">
+      <button class="act" id="btnReplay">重播</button>
+      <button class="act" id="btnSkip">跳过</button>
+    </div>
+    <div class="tip">
+      离线预览说明：<kbd>Enter</kbd>/<kbd>Space</kbd>/点击 = 确认节点；横向拖动旋转背景航线网；
+      <kbd>Esc</kbd> 跳过。正式环境里「权限认证」读取 ~/.dsh 真实 skills 与插件清单并逐条授权，
+      此处 file:// 无法访问宿主接口，勾选「演示清单」可看该阶段效果；
+      URL 加 <kbd>?motion=full</kbd> 可在系统"减弱动态效果"下仍预览完整节奏。
+    </div>
+  </div>
+</div>
+
+<script>
+  /* 离线预览：直接以相对路径挂载插件运行时（不加查询串，file:// 下同样可用）。
+     ?motion=full 可强制完整动效（系统开了"减弱动态效果"时预览用）。 */
+  if (location.search.indexOf('motion=full') !== -1) {
+    window.matchMedia = function (q) {
+      return { matches: false, media: q, addEventListener: function () {}, removeEventListener: function () {} }
+    }
+  }
+  window.__JT_STARTUP_SCRIPT_URL__ = '../lib/splash.js'
+  window.__JT_STARTUP__ = {
+    enabled: true, mode: 'always', theme: 'light', speed: 1,
+    requireInteraction: true, allowSkip: true, sound: true, soundVolume: 0.5,
+    identity: 'JT-Levent', identityId: 'JT01919561',
+    hub: 'SHANGHAI · GLOBAL HQ', inventory: true, background: true, accent: '#d8232a'
+  }
+  /* 演示清单：结构和宿主 /jt-startup/inventory.json 一致，明确标注"演示" */
+  function demoInventory() {
+    return {
+      ok: true, elapsed_ms: 137,
+      skills: [
+        { name: 'java-dev', source: '~/.dsh/skills/java-dev' },
+        { name: 'idea-mcp-first', source: '~/.dsh/skills/idea-mcp-first' },
+        { name: 'requirement-analysis', source: '~/.dsh/skills/requirement-analysis' },
+        { name: 'delegate-code-to-agent', source: '~/.dsh/skills/delegate-code-to-agent' }
+      ],
+      plugins: [
+        { name: 'dsh-jt-startup', version: '0.1.0', tools: null, source: '~/.dsh/profiles/desktop' },
+        { name: 'dsh-better-sidebar', version: '0.24.1', tools: null, source: '~/.dsh/profiles/desktop' },
+        { name: 'dsh-free-search', version: '0.8.1', tools: null, source: '~/.dsh/profiles/desktop' },
+        { name: 'dshmarket', version: '1.66.11', tools: null, source: '~/.dsh/profiles/desktop' },
+        { name: 'dsh-update-checker', version: '1.7.1', tools: null, source: '~/.dsh/profiles/desktop' }
+      ]
+    }
+  }
+  window.__JT_STARTUP_DEMO__ = demoInventory()
+
+  var $ = function (id) { return document.getElementById(id) }
+  $('fold').addEventListener('click', function () { $('console').classList.toggle('open') })
+  $('speedVal').textContent = Number($('inSpeed').value).toFixed(2) + '×'
+  $('inSpeed').addEventListener('input', function () {
+    $('speedVal').textContent = Number(this.value).toFixed(2) + '×'
+  })
+
+  function currentConfig() {
+    return {
+      enabled: true, mode: 'always',
+      theme: $('inTheme').value,
+      speed: Number($('inSpeed').value),
+      requireInteraction: true, allowSkip: true, sound: true, soundVolume: 0.5,
+      identity: $('inIdentity').value.trim() || 'JT-DEVELOPER',
+      identityId: $('inId').value.trim() || 'JT0001',
+      hub: 'SHANGHAI · GLOBAL HQ', inventory: true, background: true, accent: '#d8232a'
+    }
+  }
+  $('btnReplay').addEventListener('click', function () {
+    window.__JT_STARTUP__ = currentConfig()
+    window.__JT_STARTUP_DEMO__ = $('inDemo').checked ? demoInventory() : null
+    var api = window.__JT_STARTUP_API__
+    if (api && typeof api.replay === 'function') api.replay()
+    else location.reload()
+  })
+  $('btnSkip').addEventListener('click', function () {
+    var api = window.__JT_STARTUP_API__
+    if (api && typeof api.skip === 'function') api.skip()
+  })
+</script>
+<script src="../lib/splash.js"></script>
+</body>
+</html>

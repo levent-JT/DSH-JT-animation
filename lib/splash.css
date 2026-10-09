@@ -1,0 +1,533 @@
+/* ============================================================================
+ * dsh-jt-startup — 启动界面样式「极速干线 EXPRESS TRUNK」
+ * ----------------------------------------------------------------------------
+ * 主题：极兔红 × 暖白图纸底（浅色）/ 深夜分拣场（深色）。
+ * 阶段可见性由根节点上的 jts-p0…jts-p5 阶段类控制，
+ * 品牌色 / 播放速度由运行时写入 --jts-accent / --jts-speed。
+ * ========================================================================== */
+
+.jts-root {
+  --jts-ink: #17191b;
+  --jts-soft: rgba(23, 25, 27, .55);
+  --jts-line: rgba(23, 25, 27, .18);
+  --jts-panel: rgba(255, 253, 248, .92);
+  --jts-bg: #f6f3ee;
+  --jts-mono: "Cascadia Code", "Consolas", ui-monospace, monospace;
+  --jts-sans: "Bahnschrift", "Segoe UI", "Microsoft YaHei", sans-serif;
+
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  background: var(--jts-bg);
+  color: var(--jts-ink);
+  font-family: var(--jts-sans);
+  overflow: hidden;
+  transition: opacity .8s ease, background .45s ease;
+  user-select: none;
+  cursor: default;
+}
+.jts-root.jts-dark {
+  --jts-ink: #e9ecef;
+  --jts-soft: rgba(233, 236, 239, .55);
+  --jts-line: rgba(233, 236, 239, .2);
+  --jts-panel: rgba(18, 21, 24, .92);
+  --jts-bg: #101214;
+}
+
+/* 序章：品牌红满屏，白字白描 */
+.jts-root.jts-p0 { background: var(--jts-accent); color: #fff; }
+.jts-root.jts-p0 .jts-stage { color: #fff; }
+.jts-root.jts-p0 .jts-kicker { color: rgba(255, 255, 255, .8); }
+.jts-root.jts-p0 .jts-note { color: rgba(255, 255, 255, .72); }
+
+/* ── 可选照片背景（用户可放入 lib/assets/bg.jpg 等，自动虚化压暗）──────── */
+.jts-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.jts-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(14px) saturate(.75) brightness(1.04);
+  opacity: .22;
+  transform: scale(1.06);
+}
+.jts-dark .jts-bg img { opacity: .16; brightness(.9); }
+.jts-p0 .jts-bg { display: none; }
+
+.jts-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 图纸质感：暗角 + 极淡扫描纹 */
+.jts-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(0, 0, 0, .012) 3px 4px),
+    radial-gradient(ellipse at center, transparent 58%, rgba(0, 0, 0, .05) 100%);
+}
+.jts-dark .jts-grain {
+  background:
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(255, 255, 255, .012) 3px 4px),
+    radial-gradient(ellipse at center, transparent 58%, rgba(0, 0, 0, .22) 100%);
+}
+.jts-p0 .jts-grain { opacity: .5; }
+/* ORIGIN 长镜头：加重暗角 + 扫描纹极缓慢漂移，胶片质感 */
+.jts-p1 .jts-grain {
+  opacity: .9;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(0, 0, 0, .016) 3px 4px),
+    radial-gradient(ellipse at center, transparent 52%, rgba(0, 0, 0, .1) 100%);
+  animation: jtsGrainDrift 2.4s steps(4) infinite;
+}
+@keyframes jtsGrainDrift {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 0 1px, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) { .jts-p1 .jts-grain { animation: none; } }
+
+/* ── 顶栏品牌 ──────────────────────────────────────────────────────────── */
+.jts-mast {
+  position: absolute;
+  top: 26px;
+  left: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.jts-live .jts-mast { opacity: 1; transform: none; }
+.jts-mark {
+  background: var(--jts-accent);
+  color: #fff;
+  font: 700 17px/1 var(--jts-sans);
+  letter-spacing: .5px;
+  padding: 9px 10px;
+  border-radius: 3px;
+}
+.jts-mastText b { display: block; font-size: 15px; letter-spacing: 2px; }
+.jts-mastText span {
+  display: block;
+  font: 8.5px/1.9 var(--jts-mono);
+  letter-spacing: 1.6px;
+  color: var(--jts-soft);
+}
+.jts-rev {
+  margin-left: 10px;
+  padding-left: 14px;
+  border-left: 1px solid var(--jts-line);
+  font: 8.5px/1.7 var(--jts-mono);
+  letter-spacing: 1.6px;
+  color: var(--jts-soft);
+}
+
+.jts-stepcount {
+  position: absolute;
+  top: 30px;
+  right: 32px;
+  font: 10px var(--jts-mono);
+  letter-spacing: 2px;
+  color: var(--jts-soft);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.jts-live .jts-stepcount { opacity: 1; }
+.jts-p0 .jts-stepcount { color: rgba(255, 255, 255, .75); }
+
+/* ── 中央文案 ──────────────────────────────────────────────────────────── */
+.jts-stage {
+  position: absolute;
+  left: 50%;
+  top: 26%;
+  transform: translateX(-50%);
+  width: min(86%, 720px);
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+}
+.jts-kicker {
+  font: 10.5px var(--jts-mono);
+  letter-spacing: 3.5px;
+  color: var(--jts-soft);
+  min-height: 16px;
+}
+/* 序章与 ORIGIN 开场：标题组上移，把画面中心让给镜头 */
+.jts-p0 .jts-stage { top: 13%; }
+.jts-p0 .jts-note { display: none; }
+.jts-p3 .jts-stage { top: 15%; }
+.jts-p1 .jts-stage { top: 7%; }
+.jts-p1 .jts-note { letter-spacing: 2px; }
+.jts-p1 .jts-title, .jts-p1 .jts-note {
+  text-shadow: 0 0 10px var(--jts-bg), 0 0 3px var(--jts-bg);
+}
+.jts-title {
+  margin: 14px 0 12px;
+  font-size: clamp(26px, 4vw, 52px);
+  font-weight: 500;
+  letter-spacing: 10px;
+  text-indent: 10px; /* 抵消末字距，保持视觉居中 */
+  line-height: 1.2;
+}
+.jts-note {
+  margin: 0 auto;
+  max-width: 560px;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  line-height: 1.8;
+  color: var(--jts-soft);
+}
+.jts-note::after {
+  content: "";
+  display: block;
+  width: 64px;
+  border-top: 1px solid var(--jts-accent);
+  margin: 16px auto 0;
+}
+
+.jts-title, .jts-note {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .7s cubic-bezier(.16, .84, .2, 1), transform .7s cubic-bezier(.16, .84, .2, 1);
+}
+.jts-title.jts-in, .jts-note.jts-in { opacity: 1; transform: none; }
+
+/* 阶段 5：终幕欢迎版式替换中央文案 */
+.jts-p6 .jts-stage { opacity: 0; transition: opacity .6s ease; }
+
+/* ── 身份卡（阶段 3）：根级定位，独立于舞台文案，避免与指纹条叠压 ─────── */
+.jts-idcard {
+  position: absolute;
+  left: 50%;
+  top: 63%;
+  transform: translateX(-50%) translateY(14px);
+  width: 280px;
+  background: var(--jts-panel);
+  border: 1px solid var(--jts-line);
+  text-align: left;
+  padding: 12px 18px;
+  opacity: 0;
+  z-index: 2;
+  transition: opacity .7s cubic-bezier(.16, .84, .2, 1), transform .7s cubic-bezier(.16, .84, .2, 1);
+}
+.jts-p3 .jts-idcard { opacity: 1; transform: translateX(-50%); }
+.jts-idcard div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--jts-line);
+  font-size: 10px;
+}
+.jts-idcard div:last-child { border-bottom: 0; }
+.jts-idcard span { color: var(--jts-soft); }
+.jts-idcard b {
+  font: 500 11px var(--jts-mono);
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+.jts-idcard div:first-child b { color: var(--jts-accent); }
+
+/* ── 权限认证 · 终端式授权台（阶段 4–5）────────────────────────────────── */
+.jts-term {
+  position: absolute;
+  left: 50%;
+  top: 44vh;
+  transform: translateX(-50%);
+  width: min(88%, 660px);
+  background: var(--jts-panel);
+  border: 1px solid var(--jts-ink);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, .05);
+  opacity: 0;
+  transition: opacity .6s cubic-bezier(.16, .84, .2, 1);
+  pointer-events: none;
+  z-index: 2;
+  text-align: left;
+}
+.jts-p4 .jts-term { opacity: 1; }
+.jts-p5 .jts-term { opacity: .38; }
+.jts-p6 .jts-term { opacity: 0; }
+.jts-termHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--jts-line);
+  font: 11px var(--jts-mono);
+  letter-spacing: 1px;
+}
+.jts-termCmd { color: var(--jts-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.jts-termCmd::before { content: "\276F "; color: var(--jts-accent); }
+.jts-termCount { color: var(--jts-soft); flex: none; }
+.jts-termCount b { color: var(--jts-ink); font-weight: 600; }
+.jts-termBody {
+  min-height: 128px;
+  max-height: 172px;
+  overflow: hidden;
+  padding: 10px 14px 12px;
+  font: 12px/1.95 var(--jts-mono);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 84%, transparent);
+  mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 84%, transparent);
+}
+.jts-termLine {
+  display: flex;
+  gap: 10px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity .35s ease, transform .35s ease;
+}
+.jts-termLine.jts-in { opacity: 1; transform: none; }
+.jts-termMark { flex: none; width: 12px; }
+.jts-termMark.jts-m-ok { color: var(--jts-accent); font-weight: 700; }
+.jts-termMark.jts-m-warn { color: var(--jts-accent); }
+.jts-termMark.jts-m-dim { color: var(--jts-soft); }
+.jts-termText { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.jts-termFoot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 14px;
+  border-top: 1px solid var(--jts-line);
+  font: 10px var(--jts-mono);
+  letter-spacing: 1.5px;
+  color: var(--jts-soft);
+}
+.jts-termGrant { color: var(--jts-soft); opacity: .45; transition: color .4s ease, opacity .4s ease; }
+.jts-termGrant.jts-on { color: var(--jts-accent); opacity: 1; font-weight: 700; }
+.jts-p5 .jts-kicker { color: var(--jts-accent); }
+
+/* ── 控制台日志条（左下）───────────────────────────────────────────────── */
+.jts-log {
+  position: absolute;
+  left: 30px;
+  bottom: 34px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.jts-live .jts-log { opacity: 1; }
+.jts-logBits { display: flex; gap: 3px; margin-bottom: 8px; }
+.jts-logBits i {
+  width: 9px;
+  height: 4px;
+  background: var(--jts-line);
+}
+.jts-logBits i.jts-on { background: var(--jts-accent); }
+.jts-logLine {
+  font: 10px var(--jts-mono);
+  letter-spacing: 1.8px;
+  color: var(--jts-soft);
+}
+.jts-logState {
+  margin-top: 4px;
+  font: 9.5px var(--jts-mono);
+  letter-spacing: 1.5px;
+  color: var(--jts-accent);
+}
+
+/* ── 底部字幕（中下）───────────────────────────────────────────────────── */
+.jts-subtitle {
+  position: absolute;
+  left: 50%;
+  bottom: 36px;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .5s ease;
+  width: 60%;
+}
+.jts-live .jts-subtitle { opacity: 1; }
+.jts-subZh { display: block; font-size: 10.5px; letter-spacing: 2px; color: var(--jts-soft); }
+.jts-subEn {
+  display: block;
+  margin-top: 5px;
+  font: 8px var(--jts-mono);
+  letter-spacing: 2px;
+  color: var(--jts-soft);
+  opacity: .75;
+}
+
+/* ── 终幕欢迎 · 会话卡片（阶段 6）───────────────────────────────────────── */
+.jts-welcome {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+}
+.jts-p6 .jts-welcome { opacity: 1; transition: opacity .9s cubic-bezier(.16, .84, .2, 1) 1.15s; }
+.jts-w1 {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font: 10.5px var(--jts-mono);
+  letter-spacing: 3px;
+  color: var(--jts-soft);
+}
+.jts-w1 .jts-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--jts-accent);
+  animation: jtsDotPulse 2.2s ease-in-out infinite;
+}
+@keyframes jtsDotPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
+}
+.jts-w2 {
+  margin: 18px 0 10px;
+  font-size: clamp(26px, 3.6vw, 44px);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.jts-w3 {
+  font: 11px var(--jts-mono);
+  letter-spacing: 2px;
+  color: var(--jts-soft);
+}
+.jts-w4 {
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 1px solid var(--jts-line);
+  display: inline-block;
+  font: 9.5px var(--jts-mono);
+  letter-spacing: 2px;
+  color: var(--jts-soft);
+  opacity: .8;
+}
+.jts-p6 .jts-log, .jts-p6 .jts-subtitle, .jts-p6 .jts-mast { opacity: .35; }
+
+/* ── 交互按钮 ──────────────────────────────────────────────────────────── */
+.jts-action {
+  position: absolute;
+  left: 50%;
+  bottom: 17%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+  z-index: 3;
+}
+.jts-action.jts-in { opacity: 1; pointer-events: auto; }
+.jts-btn {
+  font-family: var(--jts-sans);
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--jts-ink);
+  background: var(--jts-panel);
+  border: 1px solid var(--jts-ink);
+  padding: 11px 30px;
+  cursor: pointer;
+  min-width: 180px;
+}
+.jts-btn:hover { border-color: var(--jts-accent); color: var(--jts-accent); }
+.jts-btn .jts-btnEn {
+  display: block;
+  margin-top: 3px;
+  font: 8.5px var(--jts-mono);
+  letter-spacing: 2.5px;
+  color: var(--jts-soft);
+}
+.jts-btn.jts-pulse { animation: jtsPulse calc(1.6s / var(--jts-speed, 1)) ease-in-out infinite; }
+@keyframes jtsPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+  50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--jts-accent) 18%, transparent); }
+}
+.jts-hint {
+  margin-top: 12px;
+  font-size: 10px;
+  color: var(--jts-soft);
+}
+.jts-hint kbd {
+  font: 9px var(--jts-mono);
+  border: 1px solid var(--jts-line);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+/* ── 跳过 / 进度 ───────────────────────────────────────────────────────── */
+.jts-skip {
+  position: absolute;
+  right: 32px;
+  bottom: 34px;
+  font: 10px var(--jts-mono);
+  letter-spacing: 2px;
+  color: var(--jts-soft);
+  cursor: pointer;
+  padding: 8px 10px;
+  opacity: 0;
+  transition: opacity .5s ease, color .2s ease;
+  z-index: 4;
+  pointer-events: auto;
+}
+.jts-skip { opacity: .75; }
+.jts-p0 .jts-skip { color: rgba(255, 255, 255, .85); }
+.jts-p0 .jts-skip:hover { color: #fff; }
+.jts-skip:hover { color: var(--jts-accent); }
+
+.jts-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--jts-line);
+  overflow: hidden;
+}
+.jts-progress i {
+  display: block;
+  height: 100%;
+  background: var(--jts-accent);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* 揭幕退场 */
+.jts-root.jts-gone { opacity: 0; }
+
+/* ── 小屏适配 ──────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .jts-mast { top: 18px; left: 18px; gap: 9px; }
+  .jts-mark { font-size: 14px; padding: 7px 8px; }
+  .jts-mastText b { font-size: 13px; }
+  .jts-rev { display: none; }
+  .jts-stepcount { top: 20px; right: 18px; }
+  .jts-stage { top: 22%; }
+  .jts-title { letter-spacing: 6px; text-indent: 6px; }
+  .jts-idcard { width: 240px; padding: 10px 14px; }
+  .jts-term { width: 92%; }
+  .jts-termBody { font-size: 10.5px; max-height: 150px; min-height: 96px; }
+  .jts-termHead { font-size: 10px; }
+  .jts-log { left: 18px; bottom: 26px; }
+  .jts-logBits i { width: 7px; }
+  .jts-logLine { font-size: 9px; }
+  .jts-skip { right: 16px; bottom: 26px; }
+  .jts-subtitle { display: none; }
+  .jts-action { bottom: 20%; }
+}
+
+/* ── 减弱动效 ──────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .jts-root, .jts-root * { transition-duration: .01s !important; animation: none !important; }
+  .jts-btn.jts-pulse { animation: none !important; }
+}

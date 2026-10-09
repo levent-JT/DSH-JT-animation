@@ -1,0 +1,53 @@
+{
+  "name": "dsh-jt-startup",
+  "version": "0.2.19",
+  "description": "极兔速递原创 DSH 启动画面「J&T 研发控制台 R&D CONSOLE」：品牌红序章 → 连接工作区 → 工牌核验 → 真实读取本地 skills/plugins → 能力就绪 → 欢迎回来。开发者叙事为主轴，极兔全球业务以贸易航线地球（或放入 lib/assets/bg.jpg 的照片）作为虚化背景层。零依赖、无外部素材，音效全部 WebAudio 现场合成；中段读取的是 ~/.dsh 下的真实能力清单，不做模拟进度。web profile 与 DeepSeek Harness Desktop 通用。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "deepseek-harness-desktop",
+    "startup",
+    "splash",
+    "boot-animation",
+    "jt-express"
+  ],
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "test",
+    "preview/index.html",
+    "cordis.patch.yml",
+    "安装.cmd",
+    "卸载.cmd",
+    "打开预览.cmd",
+    "README.md",
+    "INSTALL.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node test/smoke.mjs"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings"
+      ],
+      "platform": "web"
+    }
+  },
+  "author": "levent.li"
+}
