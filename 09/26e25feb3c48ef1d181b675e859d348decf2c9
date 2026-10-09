@@ -1,0 +1,1695 @@
+preview/index.html
+  9e366f337a1137bd 6,8-9,68,92,94-100,104,112-125,131-133,135-136,142,149-153,155,167,179-181,184-197,200-201,203-214,216-241,247-249
+lib/w40k.js
+  1a04766d4f5c66ba 772
+  c107c427220f2409 43
+  29d760d68817137d 454-455,458-459
+  16ab796ee4970dfb 2433-2435,2437-2438,2445-2446,2449
+  eacd247b523edcb8 2216-2217
+  da0ebfa519de265d 9-10,13-15,18-20
+  955ccab0f063d221 1654
+  1206874ec7803caa 242
+  30b1eb5c9b004ed8 1280,1283-1285,1291-1293,1297-1343,1347,1351,1355,1359,1362-1364,1369-1370,1385-1389,1392-1404,1406-1407,1416-1418,1420,1422,1435,1455,1457-1468,1470-1473,1514,1531-1537,1539-1566,1572,1602-1607,1609,1611-1613,1615,1617-1653,1658,1706-1749,1752-1753
+  a07cf36555014fe8 2441,2443
+  962c71f201a92484 964-965
+  c83e1b79463b062a 1230,1238-1240
+  ca66c9109f5298ed 1502,1504-1505,1509
+  39f51675b767f7fe 73-79
+  6436ec09d0406a1d 1700,1702
+  5350ef30bdffa555 2275,2278-2282,2286-2321,2324
+  abcab760a806a2e9 1838-1840,1843-1844,1848-1850,1854-1856,1869,1871
+  0a27460cb07a92a6 2379-2384,2387-2388
+  28fc73ab69fe6ca4 507
+  3bb23043e82dd682 767
+  85c21d2f6d18b4f6 1823-1835
+  406e5fc8f1ee14b0 2112,2115,2117
+  589e58feee9b799c 2173,2180-2182
+  7ab5cb07b1c43988 288
+  8dbc93f380e31280 619-640
+  92be959229a45bb9 1946-2032,2037,2041-2042,2044-2053,2055-2057,2062,2064,2072-2075,2077-2096,2101,2103,2110,2119,2126,2130,2140
+  5b05fa53fbdcb7e7 2207-2208,2210,2212-2215,2219,2221-2222,2224-2230,2232-2233
+  bcd6e5c60f61ccdd 2036,2066,2069-2070,2076,2097-2100,2102,2104-2108,2111,2113-2114,2116,2118,2120-2123,2127,2133-2139,2141-2142
+  fa316d809532ae81 251,253,255
+  76d40c74a351fe35 1-8,11-12,16-17,21-38,40-42,45-52,54,59,69,71,80-107,124-125,127-179,181-241,243-246,248-250,252,254,256-287,289-301,304-453,456-457,460,501-502,505-506,508-510,512-560,562,566-596,602-617,641-656,658-695,699-707,715-716,721-722,725-726,742-744,763,769,773,776,781,783-784,789-790,792-794,797,804-818,820-850,852,854,857-866,868-879,881-953,967-1043,1046-1050,1056-1059,1061-1066,1073-1074,1079,1081,1083-1084,1105,1107-1108,1114,1116,1136-1199,1201-1211,1219-1229,1231-1233,1244-1247,1250,1253-1260,1275,1278-1279,1345,1348-1349,1353,1390-1391,1415,1423-1425,1432-1434,1436-1438,1440-1444,1446-1447,1450-1454,1469,1474-1477,1480,1487,1489,1497,1511,1513,1515,1517-1518,1522,1530,1569-1571,1575-1578,1580-1581,1585,1588,1596,1598,1600-1601,1660,1666-1667,1672,1675,1678,1680,1701,1703-1705,1750-1751,1767-1768,1771-1822,1836-1837,1841-1842,1845-1847,1870,1872,1876-1878,1882,1885,1887-1888,1890-1891,1893-1894,1896,1898-1900,1902-1921,1925-1935,1938-1945,2034-2035,2038-2040,2058-2061,2063,2065,2067-2068,2071,2109,2124-2125,2128-2129,2131-2132,2143-2144,2193-2206,2218,2220,2223,2231,2234,2241-2274,2276-2277,2283-2285,2322-2323,2325-2327,2344-2378,2385-2386,2389-2408,2410-2432,2436,2439-2440,2444,2447-2448,2450-2464,2466-2472,2476-2493,2495-2497,2499,2501,2503-2505,2507-2512,2514-2522,2524-2527,2529,2534,2536-2612,2614-2635,2637-2673
+  f10c2f5ff4884921 2235-2236,2238
+  91d98bb96413da7a 2033,2043,2054,2145-2172,2174-2179,2183-2192
+  e6d13bd40952ba5a 954-963,966
+  45e30a9a09569450 727-729
+  330078cb53194af7 1426-1428
+  8d9e90734141d0a6 2211
+  9bd9bb65bd288d15 696-698,708-711,714,717-720,723-724,730-741,746-762,764-766,768,770-771,774-775,777-780,782,785-786,788,791,795-796,798-799,801-803,819
+  bc27e469938ab8fe 39
+  91311a52e01cd39a 597,599-601
+  0c7817cc4db19d25 1922-1924
+  d0b9574009d9d8f8 180
+  20a20fb588597a60 851
+  8fa665315ff8ef8e 1408-1414,1419,1421
+  74c5bcb74c73f967 618
+  bf9757737bcad657 1235-1236,1241-1243
+  2f3f6b78f0137f52 1769-1770
+  b6df2d79691bba2f 1881,1884,1886,1889,1892,1895,1897
+  47c67d148a746283 657
+  494e4aae0c43f2b8 1248-1249
+  d30bd3250dccb69a 2465,2473-2475
+  dc9784955e1a6489 2494,2500,2502,2513,2523,2528,2530-2533,2535
+  97cac5bc58334707 1573
+  a84a02edf605c2d6 2328-2337,2339-2343
+  3a63536c9e45ec64 1200,1212-1218
+  7e52b2a164fb2915 1251-1252
+  3129601527483dba 787
+  909b0e7604491b25 1880,1883
+  41fb9fb29f10701d 1901
+  b23acb775449da56 1936-1937
+  1bbdde9ea03bfb18 1281-1282,1286-1290,1294-1296
+  cf4a4f0d12f80225 853,855-856,867,880
+  3c7b773c946abe55 247
+  e0f8943e76e7034f 53,55-58,60-68,70,72
+  a3689a62d573b17d 1044-1045,1051-1052,1060,1067-1068,1075-1078,1080,1082,1085-1093,1097-1099,1102-1104,1106,1109-1113,1115,1117,1119,1134-1135
+  5bed54d6ed3f07cf 745
+  2e41fe0892882e9a 1261-1274,1276-1277,1344,1346,1350,1352,1354,1356-1358,1360-1361,1365-1368,1371-1384,1405,1429-1431,1439,1445,1448-1449,1478-1479,1481-1486,1488,1490,1501,1503,1506-1507,1510,1512,1516,1519-1521,1523-1529,1567-1568,1574,1579,1582-1584,1586-1587,1589-1595,1597,1599,1655-1657,1659,1670-1671,1673-1674,1679,1681-1699,1754-1766
+  a8c713c51d4b04ad 1873-1875,1879
+  6a7471c6a8a67af9 511
+  4f1c36f4a8f67549 1491-1496,1498-1500,1508
+  281c7bb63f3ed4f9 1456
+  a1d4557899340534 598
+  562cd9cf887dba05 1234,1237
+  7bdf1fe365cec370 303
+lib/client.js
+  56c3c0ea4dfd869f 133-135,137,141-143,147-167
+  e97a7eb9bb1bd353 189,192,195,202-208,212-214
+  af52ba92f6c74720 221,226,245,256,261-269,271-272
+  d1fb72aa55323b5d 51-62
+  a5e733fbece83509 466-469,475-478
+  b1653752704b23e9 470-474,479-483,485-491,498,502-510,526,529-545,550-551,553
+  3de098846932ff98 2,5-6
+  05f58ed4179bec2d 279-298,300-311,315,318,320,323-324,326-327,330-352,354-382,387-389,393-400,403,415-420
+package.json
+  3b461b7757e2d038 3-4
+lib/index.js
+  2e58766ba01b19a1 669
+  1b62db37fdf85bbc 2,5-9,11
+  6f309ffdee966dd6 552-565
+  5b2957f5be03efbc 634-639,641-642
+  412a01480e5ba9c7 682-683,685,687,690-692
+  c8a885e3b5678ec7 241-266
+  6ab2e8ba07540f70 415
+  c4526580f7947abf 408-413,416-421,423,425,430-432
+  5727620d7cec4227 660-661,663-664,670-671,673-674
+  63ea18a25be95c45 42-45,49,51,55-66,68-69,71,74,78,80,86-117,128-131,133-134,136-137,141-144,151-152,160-162,164,167-175
+  422a7df284ea9ec2 67,70
+  63915458fd6eb58e 118-127,132,135
+  52563dc3aaf3a641 157-159,165-166
+README.md
+  dfd2adb205876301 1,3,5,8-10,15,17,22-23,41-42,50,60,62,68-69,79-82,86-89,94,100-106,108-119,121-123,128-138,142-145,154-156,158,164-165
+  52c5e6ca8deea7c8 25,43,46-47
+lib/w40k.css
+  cada5b65eff01384 1-141,150-248,250-403,405,408-454,457-583
+  88a8a0853d84393b 249
+test/smoke.mjs
+  9aaae64170ace5c7 6-8,31,39-40
+  ad58af7761e0a64e 82-83,88
+  fe72c11491b68481 131-136,139-142,145-147,149-152,154-169
+  e6e9c0d165d1ef0b 191
+  a688b5e7c6070170 182-190,192-193
+  a0c3fd2a7f8a99e0 137-138,143-144,148,153
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "0926e25feb3c48ef1d181b675e859d348decf2c9",
+  "prompts": {
+    "05f58ed4179bec2d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534744491_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 104,
+      "total_deletions": 46,
+      "accepted_lines": 104,
+      "overriden_lines": 0
+    },
+    "0a27460cb07a92a6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539665068_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 8,
+      "total_deletions": 1,
+      "accepted_lines": 8,
+      "overriden_lines": 0
+    },
+    "0c7817cc4db19d25": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791538295786_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    },
+    "1206874ec7803caa": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537021160_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "16ab796ee4970dfb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537055561_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 8,
+      "total_deletions": 8,
+      "accepted_lines": 8,
+      "overriden_lines": 0
+    },
+    "1a04766d4f5c66ba": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537968992_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "1b62db37fdf85bbc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791533570356_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 4,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    },
+    "1bbdde9ea03bfb18": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540480715_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 10,
+      "total_deletions": 8,
+      "accepted_lines": 10,
+      "overriden_lines": 0
+    },
+    "20a20fb588597a60": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540615565_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "281c7bb63f3ed4f9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540520063_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "28fc73ab69fe6ca4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791556018816_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 2,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "29d760d68817137d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791556572788_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 3,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    },
+    "2e41fe0892882e9a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537385077_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 206,
+      "total_deletions": 80,
+      "accepted_lines": 138,
+      "overriden_lines": 3
+    },
+    "2e58766ba01b19a1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791533661955_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "2f3f6b78f0137f52": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537395772_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "30b1eb5c9b004ed8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539468838_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 261,
+      "total_deletions": 64,
+      "accepted_lines": 238,
+      "overriden_lines": 5
+    },
+    "3129601527483dba": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537978692_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "330078cb53194af7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540509433_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 2,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    },
+    "39f51675b767f7fe": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539802939_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 0,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    },
+    "3a63536c9e45ec64": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537855543_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 8,
+      "total_deletions": 1,
+      "accepted_lines": 8,
+      "overriden_lines": 0
+    },
+    "3b461b7757e2d038": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791535370738_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "3bb23043e82dd682": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534397780_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 2,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "3c7b773c946abe55": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537033056_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "3de098846932ff98": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534805817_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    },
+    "406e5fc8f1ee14b0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540659083_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 4,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    },
+    "412a01480e5ba9c7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791533676588_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 5,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    },
+    "41fb9fb29f10701d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791536130117_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "422a7df284ea9ec2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791535133530_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "454b5d036670ab59": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534470717_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 1,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "45e30a9a09569450": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537950748_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    },
+    "47c67d148a746283": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534393664_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 2,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "494e4aae0c43f2b8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537218607_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 4,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "4c476af136c096ab": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791535174540_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 37,
+      "total_deletions": 0,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "4f1c36f4a8f67549": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791541150386_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 10,
+      "total_deletions": 8,
+      "accepted_lines": 10,
+      "overriden_lines": 0
+    },
+    "52563dc3aaf3a641": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791535098367_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 5,
+      "total_deletions": 2,
+      "accepted_lines": 5,
+      "overriden_lines": 0
+    },
+    "52c5e6ca8deea7c8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537585441_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 9,
+      "total_deletions": 7,
+      "accepted_lines": 4,
+      "overriden_lines": 5
+    },
+    "5350ef30bdffa555": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539712340_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 43,
+      "total_deletions": 5,
+      "accepted_lines": 43,
+      "overriden_lines": 0
+    },
+    "562cd9cf887dba05": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540600443_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "56c3c0ea4dfd869f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534646877_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 31,
+      "total_deletions": 3,
+      "accepted_lines": 30,
+      "overriden_lines": 1
+    },
+    "56c4efe129fca4cb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537425687_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "5727620d7cec4227": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534570109_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 10,
+      "total_deletions": 2,
+      "accepted_lines": 8,
+      "overriden_lines": 2
+    },
+    "589e58feee9b799c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791553783685_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 3,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    },
+    "5b05fa53fbdcb7e7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537235185_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 22,
+      "total_deletions": 11,
+      "accepted_lines": 19,
+      "overriden_lines": 0
+    },
+    "5b2957f5be03efbc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534543904_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 9,
+      "total_deletions": 1,
+      "accepted_lines": 8,
+      "overriden_lines": 1
+    },
+    "5bed54d6ed3f07cf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537960508_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "63915458fd6eb58e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791535219556_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 12,
+      "total_deletions": 2,
+      "accepted_lines": 12,
+      "overriden_lines": 0
+    },
+    "63ea18a25be95c45": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791533599391_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 88,
+      "total_deletions": 28,
+      "accepted_lines": 81,
+      "overriden_lines": 1
+    },
+    "6436ec09d0406a1d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537877546_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "66313a1432dee680": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534464957_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 1,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "6a7471c6a8a67af9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791555889108_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 6,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "6ab2e8ba07540f70": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791535239481_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "6f309ffdee966dd6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791533651064_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 14,
+      "total_deletions": 11,
+      "accepted_lines": 14,
+      "overriden_lines": 0
+    },
+    "74c5bcb74c73f967": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539356457_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 0,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "754832ecb347b72e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537898592_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 4,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "76d40c74a351fe35": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534363206_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1870,
+      "total_deletions": 0,
+      "accepted_lines": 1502,
+      "overriden_lines": 17
+    },
+    "7ab5cb07b1c43988": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539765091_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 0,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "7b733950b2f60689": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534426261_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "7bdf1fe365cec370": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539822565_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 1
+    },
+    "7e52b2a164fb2915": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537928550_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 3,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "85c21d2f6d18b4f6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537412191_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 13,
+      "total_deletions": 0,
+      "accepted_lines": 13,
+      "overriden_lines": 0
+    },
+    "88a8a0853d84393b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791536140013_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "8d9e90734141d0a6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540582921_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "8dbc93f380e31280": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540677782_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 22,
+      "total_deletions": 0,
+      "accepted_lines": 22,
+      "overriden_lines": 0
+    },
+    "8fa665315ff8ef8e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540498074_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 9,
+      "total_deletions": 5,
+      "accepted_lines": 9,
+      "overriden_lines": 0
+    },
+    "909b0e7604491b25": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791538273296_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "91311a52e01cd39a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539652958_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 0,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    },
+    "91d98bb96413da7a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537464034_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 61,
+      "total_deletions": 5,
+      "accepted_lines": 47,
+      "overriden_lines": 0
+    },
+    "92be959229a45bb9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791553761559_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 136,
+      "total_deletions": 57,
+      "accepted_lines": 136,
+      "overriden_lines": 0
+    },
+    "955ccab0f063d221": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537912859_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 11,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "962c71f201a92484": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537991757_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 0,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "96d5d70b5678e36d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791536119918_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "97cac5bc58334707": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537868058_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "9aaae64170ace5c7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534988767_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 3,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    },
+    "9bd9bb65bd288d15": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537184387_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 77,
+      "total_deletions": 39,
+      "accepted_lines": 68,
+      "overriden_lines": 3
+    },
+    "9e366f337a1137bd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534940823_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 100,
+      "total_deletions": 38,
+      "accepted_lines": 100,
+      "overriden_lines": 0
+    },
+    "a07cf36555014fe8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539785996_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 1,
+      "accepted_lines": 2,
+      "overriden_lines": 1
+    },
+    "a0c3fd2a7f8a99e0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791535274957_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 6,
+      "total_deletions": 4,
+      "accepted_lines": 6,
+      "overriden_lines": 0
+    },
+    "a1d4557899340534": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537496069_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 0,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "a2d15d5807ce669f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534420086_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "a34946c47e76ba68": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537595561_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 0,
+      "overriden_lines": 1
+    },
+    "a3689a62d573b17d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540444319_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 63,
+      "total_deletions": 17,
+      "accepted_lines": 39,
+      "overriden_lines": 24
+    },
+    "a5e733fbece83509": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534885076_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 8,
+      "total_deletions": 1,
+      "accepted_lines": 8,
+      "overriden_lines": 0
+    },
+    "a688b5e7c6070170": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791535060919_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 12,
+      "total_deletions": 0,
+      "accepted_lines": 11,
+      "overriden_lines": 0
+    },
+    "a84a02edf605c2d6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540692062_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 16,
+      "total_deletions": 0,
+      "accepted_lines": 15,
+      "overriden_lines": 1
+    },
+    "a8c713c51d4b04ad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537436459_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 4,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    },
+    "abcab760a806a2e9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539491790_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 17,
+      "total_deletions": 24,
+      "accepted_lines": 13,
+      "overriden_lines": 9
+    },
+    "ad58af7761e0a64e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791535005515_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 1,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    },
+    "af52ba92f6c74720": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534691384_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 15,
+      "total_deletions": 8,
+      "accepted_lines": 15,
+      "overriden_lines": 0
+    },
+    "b1653752704b23e9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534785424_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 49,
+      "total_deletions": 3,
+      "accepted_lines": 48,
+      "overriden_lines": 0
+    },
+    "b23acb775449da56": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534478319_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 4,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "b6df2d79691bba2f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791536110957_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 9,
+      "total_deletions": 7,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    },
+    "bb8724639aaacc5e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534413325_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 0,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "bbf11e6b19a604b9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540625920_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "bc27e469938ab8fe": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791536975558_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "bcd6e5c60f61ccdd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539622318_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 85,
+      "total_deletions": 27,
+      "accepted_lines": 34,
+      "overriden_lines": 0
+    },
+    "bdee9043e47b0638": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540568129_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 0,
+      "overriden_lines": 1
+    },
+    "bf9757737bcad657": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539737062_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 5,
+      "total_deletions": 2,
+      "accepted_lines": 5,
+      "overriden_lines": 0
+    },
+    "c107c427220f2409": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791536991261_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 1
+    },
+    "c4526580f7947abf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791533629236_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 18,
+      "total_deletions": 8,
+      "accepted_lines": 17,
+      "overriden_lines": 0
+    },
+    "c83e1b79463b062a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791538316692_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 3,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    },
+    "c8a885e3b5678ec7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791533611430_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 26,
+      "total_deletions": 2,
+      "accepted_lines": 26,
+      "overriden_lines": 0
+    },
+    "ca66c9109f5298ed": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540536017_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 11,
+      "total_deletions": 6,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    },
+    "cada5b65eff01384": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791533958802_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 548,
+      "total_deletions": 0,
+      "accepted_lines": 542,
+      "overriden_lines": 7
+    },
+    "cf4a4f0d12f80225": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539639279_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 5,
+      "total_deletions": 2,
+      "accepted_lines": 5,
+      "overriden_lines": 0
+    },
+    "d0b9574009d9d8f8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537250342_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 0,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "d1fb72aa55323b5d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534631040_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 12,
+      "total_deletions": 1,
+      "accepted_lines": 12,
+      "overriden_lines": 0
+    },
+    "d30bd3250dccb69a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537114674_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 4,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    },
+    "d9d15a1bb63c38d2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537940163_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "da0ebfa519de265d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791536963024_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 8,
+      "total_deletions": 6,
+      "accepted_lines": 8,
+      "overriden_lines": 0
+    },
+    "dc9784955e1a6489": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537137805_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 11,
+      "total_deletions": 11,
+      "accepted_lines": 11,
+      "overriden_lines": 0
+    },
+    "dfd2adb205876301": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791535354400_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 82,
+      "total_deletions": 34,
+      "accepted_lines": 70,
+      "overriden_lines": 4
+    },
+    "e0f8943e76e7034f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537008172_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 16,
+      "total_deletions": 16,
+      "accepted_lines": 16,
+      "overriden_lines": 0
+    },
+    "e6d13bd40952ba5a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537264509_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 11,
+      "total_deletions": 0,
+      "accepted_lines": 11,
+      "overriden_lines": 0
+    },
+    "e6e9c0d165d1ef0b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537513047_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "e97a7eb9bb1bd353": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791534671248_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 14,
+      "total_deletions": 6,
+      "accepted_lines": 14,
+      "overriden_lines": 0
+    },
+    "eacd247b523edcb8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791538338245_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "ebf11998e80a7608": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791537041051_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "f10c2f5ff4884921": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539693538_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 6,
+      "total_deletions": 0,
+      "accepted_lines": 3,
+      "overriden_lines": 3
+    },
+    "f5381efb7cad74a5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791540638567_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 2,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "fa316d809532ae81": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791539748246_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 2,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    },
+    "fe72c11491b68481": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "sess_fca51981-451c-4a86-b17e-722b9feb23e4_1791535045013_transcript",
+        "model": "unknown"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 37,
+      "total_deletions": 0,
+      "accepted_lines": 33,
+      "overriden_lines": 0
+    }
+  }
+}
