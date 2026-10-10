@@ -1,0 +1,33 @@
+lib/index.js
+  f72e605af8f42362 57,264-268,417-418,423,573-578,614-624,629-634,638,713-715
+lib/w40k.js
+  f72e605af8f42362 56
+README.md
+  f72e605af8f42362 26,28,30,32-53,74,76,150-151,162-166
+lib/score.js
+  f72e605af8f42362 1-87,89-95,97-125,127-149,151-160,162-166,168-185,187-191,193-298,300-514,516-640
+preview/index.html
+  f72e605af8f42362 151-152,224,227-241
+lib/client.js
+  f72e605af8f42362 399
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "84b72314503e3fd7c40a8e00e23745a840dff353",
+  "prompts": {
+    "f72e605af8f42362": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "19c07371-fb8f-4395-8085-9c660c362cc1",
+        "model": "qfmodel"
+      },
+      "human_author": "levent.li",
+      "messages": [],
+      "total_additions": 829,
+      "total_deletions": 46,
+      "accepted_lines": 815,
+      "overriden_lines": 10
+    }
+  }
+}
