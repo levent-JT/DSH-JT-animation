@@ -3,7 +3,7 @@
 ## 一、直接安装（推荐）
 
 ```bash
-dsh plugin --profile desktop add ./dsh-jt-startup-0.3.0.tgz
+dsh plugin --profile desktop add ./dsh-jt-startup-0.4.0.tgz
 ```
 
 Windows 上双击 `安装.cmd` 一样（自动 npm pack 并安装到检测到的 profile）。

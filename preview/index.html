@@ -148,6 +148,8 @@
   }
 
   var START_STYLE = location.search.indexOf('style=w40k') !== -1 ? 'w40k' : 'jt'
+  /* 音轨引擎是两套共用的一份：预览台、运行时、audio-lab 渲染台读同一个文件 */
+  var SCORE_JS = '../lib/score.js'
   var STYLE_FILE = {
     jt: { css: '../lib/splash.css', js: '../lib/splash.js' },
     w40k: { css: '../lib/w40k.css', js: '../lib/w40k.js' }
@@ -219,11 +221,24 @@
     $('startCss').href = files.css
     window.__JT_STARTUP__ = cfg
     window.__JT_STARTUP_SCRIPT_URL__ = files.js
+    window.__JT_STARTUP_SCORE_URL__ = SCORE_JS
     window.__JT_STARTUP_DEMO__ = $('inDemo').checked ? demoInventory() : null
     try { delete window.__JT_STARTUP_LOADED__ } catch (e) { window.__JT_STARTUP_LOADED__ = undefined }
-    var s = document.createElement('script')
-    s.src = files.js + '?t=' + Date.now()
-    document.body.appendChild(s)
+    /* 动态插入的脚本不保证顺序，所以引擎到货再挂 runtime；
+       引擎拿不到也照常开画 —— 动画本身不该被音频拖住。 */
+    var boot = function () {
+      var s = document.createElement('script')
+      s.src = files.js + '?t=' + Date.now()
+      document.body.appendChild(s)
+    }
+    if (window.JTSCORE) boot()
+    else {
+      var sc = document.createElement('script')
+      sc.src = SCORE_JS
+      sc.onload = boot
+      sc.onerror = boot
+      document.body.appendChild(sc)
+    }
   }
 
   $('inStyle').value = START_STYLE

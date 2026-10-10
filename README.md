@@ -23,20 +23,34 @@
 
 叙事是一场完整的机械教仪式（唤醒 → 朝圣 → 接驳 → 铭刻 → 唤醒圣物 → 祝圣 → 庇佑），不是企业授权流程；**黄金王座作为暗背景母题贯穿全部七幕**，辉光随仪式推进呼吸涨落。美术纪律：每帧只留一个发光主角，全场暗角 + 胶片颗粒收掉中间调；**鼠标交互**（烛光跟随 / 图面与王座视差 / 点击星火涟漪 / 按钮悬停）贯穿全程。
 
-### 女声英文旁白（voice，两套风格共用）
+### 女声英文旁白（voice，每套风格各自一条轨）
 
-深潜计划同款音色：Qwen3-TTS 参考音克隆预生成的英文 wav（24 kHz 单声道，随包分发在 `lib/assets/voice/`，来源与校验记录见其 `manifest.json`，模型 Apache-2.0）。阶段映射两套一致 —— 长镜头阶段（起于印尼 / 朝圣航路）不配旁白，把声音留给配乐：
+同一个音色、两套各自重写的台词：阿里云百炼 **Qwen-TTS 声音复刻**（`qwen3-tts-vc-2026-01-22`，用原先那批本地生成的 clip 做参考音，所以音色延续），产物随包分发在 `lib/assets/voice/jt/` 与 `lib/assets/voice/w40k/`（24 kHz 单声道，来源与逐句时长见 `manifest.json`）。
 
-| 阶段 | 台词 |
-|---|---|
-| 00 启动 / 唤醒 | D. S. H. Startup sequence initiated. |
-| 02 连接 / 接驳 | Preparing the local workspace. |
-| 03 身份 / 铭刻 | Operator profile confirmed. |
-| 04 认证 / 圣物 | Loading local skills and plugins. |
-| 05 通过 / 祝圣 | Local resources loaded.（清单读取失败则播 Local resources could not be loaded.）|
-| 06 欢迎 / 庇佑 | Welcome, Operator. |
+台词是**按每幕真实时长排**的，不是照搬流程文案：极兔走全球研发调度台的陈述口吻，40K 走机械教礼仪英文（不出现 skills / workspace / profile 这类公司词）。短句实测有约 1.2s 的起收开销，所以一闪而过的幕（GRANTED 1.3s、CONSECRATIO 1.4s）**不放旁白**，让给音轨爆点。
 
-行为：跟随「界面音效」开关与音量；被浏览器自动播放策略拦截时在首个手势补播；Esc / 跳过 / 重播 / 揭幕瞬间整体静音。设置页可单独关闭。
+| 幕 | 极兔干线 | 战锤40K |
+|---|---|---|
+| 00 唤醒 | —（1.3s 放不下）| Awaken, machine spirit. |
+| 01 长镜头 | Jakarta. Two thousand fifteen. | Terra lights the dark. |
+| 02 接驳 | Workspace linked. | The uplink is open. |
+| 03 核验 | Operator verified. | Your name is inscribed. |
+| 04 清单 | Loading local skills and plugins. | The relics awaken. |
+| 05 通过/祝圣 | —（改由和弦爆点）| —（改由巨印撞击）|
+| 06 终幕 | Welcome back, operator. | May the Machine God be with you. |
+| 清单部分被禁用 | Some local resources need attention. | Some relics remain unawakened. |
+| 清单读不到 | Local inventory is unavailable. | The codex could not be read. |
+
+行为：跟随「界面音效」开关与音量；人声期间音轨 duck 6dB 正好那么久（时长取自解码后的实际 buffer）；`speed > 1.5` 不播旁白（幕时长除以 speed 后台词必然跨幕）；减弱动效下整体不播；被自动播放策略拦截时在首个手势**从当前进度续播**，不再整句丢弃；Esc / 跳过 / 揭幕瞬间淡出并停掉全部已排节点。
+
+### 音轨（每套风格一条完整配曲）
+
+音效不再是「每幕几条固定 blip」。`lib/score.js` 是两套共用的音轨引擎（master 总线 → 限幅 → 程序生成的混响 IR），两套各自的谱表写死在同一份文件里：
+
+- **极兔干线**：A 小调五声、96BPM 干线脉搏、0.9s 短混响；长镜头幕十音级联的声像随网络铺满六洲扫到右，定影上海一记撞击，终幕完整回收母题并八度重叠。
+- **战锤40K**：D 弗里吉亚、60BPM、3.2s 大教堂混响；管风集群缓慢涌出，八记不谐泛音钟点亮星域，铁砧四击的锻打节奏，巨印砸落的大钟尾巴拖满全场，终幕把朝圣动机放慢一倍回收。
+
+**cue 用「该幕进度的比例」描述**，绝对秒数由当幕真实时长推导 —— 所以 `speed`、减弱动效、确认节点的实际等待时长都会带着音乐一起变速，音高不变。这修掉了旧实现里音效硬编码绝对秒数、2× 速度下音乐落后画面约 3 秒的错位。
 
 | # | 阶段 | 画面 |
 |---|------|------|
@@ -57,9 +71,9 @@ GW 商标图形）；音效 WebAudio 现场合成；**唯一的随包音频资�
 
 ```bash
 # 桌面端：先完全退出 DeepSeek Harness Desktop，然后
-dsh plugin --profile desktop add ./dsh-jt-startup-0.3.0.tgz
+dsh plugin --profile desktop add ./dsh-jt-startup-0.4.0.tgz
 # web 端
-dsh plugin --profile web add ./dsh-jt-startup-0.3.0.tgz
+dsh plugin --profile web add ./dsh-jt-startup-0.4.0.tgz
 ```
 
 Windows 双击 `安装.cmd` 会自动打包并安装到检测到的 profile。
@@ -133,6 +147,8 @@ lib/splash.css  极兔样式（阶段类 jts-p0…p6）
 lib/w40k.js     战锤40K运行时（浏览器端，零依赖）：与极兔同协议的七阶段时间线 +
                 羊皮纸星图 / 黄金王座虚化层 / 火漆密印 / 磷光终端；零素材全程序化
 lib/w40k.css    40K 样式（阶段类 jtw-p0…p6；哥特衬线 + 宋体）
+lib/score.js    两套共用的音轨引擎（总线/限幅/程序混响 + 合成原语 + 两套谱表与旁白 cue 表）
+                —— 运行时、离线预览、audio-lab 渲染台读这一份，不存在两份实现漂移
 lib/client.js   设置页「启动动画」（风格选择卡片 + 双套身份表单 + 跨风格热切换预览）
                 + 桌面端自举兜底
 preview/        离线预览页（风格下拉 / ?style=w40k，复用同一份运行时）
@@ -142,6 +158,11 @@ test/smoke.mjs  冒烟测试：node test/smoke.mjs
 两套 runtime 共用同一注入协议（root id / `jts-boot` / `jts-lock` / storage 键 /
 `__JT_STARTUP__` / `__JT_STARTUP_API__` / 9 秒 failsafe），Host 侧 `configForPage`
 把当前风格组扁平化成 v0.2 同款字段视图 —— `splash.js` 无需感知 schema v2。
+
+音轨引擎走 `<script defer>` 的文档顺序（`/jt-startup/score.js` 先于 runtime），并暴露
+`__JT_STARTUP_SCORE_URL__` / `config.scoreUrl`；桌面端自举与跨风格重放若绕开 index 注入，
+runtime 自己补挂一次，等引擎到货再把挂起的乐句从当前进度续播 —— 拿不到引擎也只影响声音，
+不阻塞画面。
 
 真实清单接口：`GET /jt-startup/inventory.json` →
 `{ok, skills:[{name,source}], plugins:[{name,version,tools,source}], elapsed_ms}`。

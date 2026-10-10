@@ -1,6 +1,6 @@
 {
   "name": "dsh-jt-startup",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "DSH 双风格启动动画插件：v0.3 起一套插件两套完全独立的美术。「极兔干线 EXPRESS TRUNK」——品牌红序章 → 起于印尼长镜头（贸易航线地球）→ 连接工作区 → 工牌核验 → 真实读取本地 skills/plugins → 认证通过 → 欢迎回来；「战锤40K · 机神祷文 RITES OF THE MACHINE GOD」——哥特暗色致敬：机魂唤醒 → 烛光羊皮纸星图 + 背景虚化黄金王座 → 神经接驳 → 火漆密卷核验 → 授权仪式（真实清单逐项 SANCTIONED）→ 巨印砸落 → 机神庇佑。设置页可切换风格并分别配置身份。零依赖、无外部素材，音效全部 WebAudio 现场合成；清单读取 ~/.dsh 真实数据，不做模拟进度。web profile 与 DeepSeek Harness Desktop 通用。",
   "keywords": [
     "dsh",
