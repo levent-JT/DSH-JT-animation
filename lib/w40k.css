@@ -398,7 +398,8 @@
   text-transform: uppercase;
 }
 .jtw-w2 {
-  margin: 18px 0 14px;
+  /* 有 max-width 的块在欢迎容器里默认靠左：auto 边距把盒子自身也居中 */
+  margin: 18px auto 14px;
   max-width: min(80vw, 1100px);
   font-family: var(--jtw-zh);
   font-size: clamp(24px, 3.3vw, 42px);
