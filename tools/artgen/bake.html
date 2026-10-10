@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>底片烘焙 · bake</title>
+<style>
+  body { margin:0; padding:16px; background:#101112; color:#cfd3d6; font:12px/1.65 ui-monospace,Consolas,monospace }
+  h1 { font-size:14px; margin:0 0 10px }
+  .grid { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:12px }
+  .cell { background:#17181a; border:1px solid #2a2c2f; padding:6px }
+  .cell b { display:block; font-weight:400; color:#8b9199; margin-bottom:4px }
+  canvas { display:block; max-width:260px; background:
+    repeating-conic-gradient(#232426 0 25%, #1a1b1d 0 50%) 0 0/16px 16px }
+  label { display:block; margin-bottom:6px }
+  input[type=range] { width:150px; vertical-align:middle }
+  input[type=text] { background:#0d0e0f; color:#cfd3d6; border:1px solid #2a2c2f; padding:3px 6px; width:180px }
+  button { background:#2a2c2f; color:#e6e8ea; border:1px solid #3d4045; padding:6px 14px; cursor:pointer }
+  pre { background:#0d0e0f; padding:10px; white-space:pre-wrap; max-height:34vh; overflow:auto }
+</style>
+</head>
+<body>
+<h1>底片烘焙 —— 把出图工具的纯色底键成 alpha，导出运行时用的分层 webp</h1>
+<div class="grid">
+  <div class="cell"><b>原图</b><canvas id="cSrc"></canvas></div>
+  <div class="cell"><b>键控后（棋盘=透明）</b><canvas id="cOut"></canvas></div>
+  <div class="cell">
+    <b>参数</b>
+    <label>输出名<input id="inName" type="text" value="custodes/vat-figure"></label>
+    <label>底噪容差 <span id="vT0"></span><input id="inT0" type="range" min="0" max="0.5" step="0.01" value="0.1"></label>
+    <label>键控宽度 <span id="vT1"></span><input id="inT1" type="range" min="0.02" max="0.9" step="0.01" value="0.26"></label>
+    <label>去溢色 <span id="vSp"></span><input id="inSp" type="range" min="0" max="1" step="0.05" value="0.85"></label>
+    <label>边缘收缩 <span id="vSh"></span><input id="inSh" type="range" min="0" max="4" step="0.5" value="1"></label>
+    <label>长边像素 <span id="vPx"></span><input id="inPx" type="range" min="400" max="1600" step="20" value="900"></label>
+    <button id="btnRun">重算</button>
+    <button id="btnSave">导出 webp</button>
+  </div>
+</div>
+<pre id="log">待载入…</pre>
+<script>
+/* 为什么在浏览器里做：Node 端没有图像编解码库，而 canvas 天生就有 ——
+   getImageData 做键控、toDataURL('image/webp') 直接出带 alpha 的成品，
+   零依赖，并且和运行时用的是同一套渲染栈，不会出现「本地看着对、跑起来不对」。
+   底色的取样策略：不写死青色，取四角中位数 —— 出图工具给的是偏 teal 的青，
+   写死 #00FFFF 会把整张图的青边都键不干净。 */
+var log = []
+function say (m) { log.push(m); document.getElementById('log').textContent = log.join('\n'); console.log(m) }
+var q = new URLSearchParams(location.search)
+var SRC = q.get('src') || '../../vibe_images/plate-vat-figure_1791613333898_92cdf1ba.png'
+/* key=0：只缩放压缩不键控 —— 背景板本来就该是满幅不透明的，键它反而啃出洞 */
+var DO_KEY = q.get('key') !== '0'
+var FMT = q.get('fmt') || 'webp'
+var img = new Image()
+var out = document.getElementById('cOut')
+var octx = out.getContext('2d', { willReadFrequently: true })
+var work = document.createElement('canvas')
+var wctx = work.getContext('2d', { willReadFrequently: true })
+
+function P (id) { return document.getElementById(id) }
+function vals () {
+  return { t0: +P('inT0').value, t1: +P('inT1').value, sp: +P('inSp').value, sh: +P('inSh').value, px: +P('inPx').value }
+}
+function showVals () {
+  var v = vals()
+  P('vT0').textContent = v.t0.toFixed(2); P('vT1').textContent = v.t1.toFixed(2)
+  P('vSp').textContent = v.sp.toFixed(2); P('vSh').textContent = v.sh.toFixed(1)
+  P('vPx').textContent = v.px
+}
+function smooth (a, b, x) { var t = Math.min(1, Math.max(0, (x - a) / Math.max(1e-6, b - a))); return t * t * (3 - 2 * t) }
+function med3 (a, b, c) { return a < b ? (b < c ? b : (a < c ? c : a)) : (a < c ? a : (b < c ? c : b)) }
+
+/* 四角 + 四边中点取样，取中位数当底色；再量一下取样点本身的离散度，
+   离散度大说明背景不平，直接警告而不是硬键出一圈脏边 */
+function sampleBg (d, w, h) {
+  var pts = [[2, 2], [w - 3, 2], [2, h - 3], [w - 3, h - 3], [(w / 2) | 0, 2], [2, (h / 2) | 0], [w - 3, (h / 2) | 0]]
+  var rs = [], gs = [], bs = []
+  for (var i = 0; i < pts.length; i++) {
+    var o = (pts[i][1] * w + pts[i][0]) * 4
+    rs.push(d[o]); gs.push(d[o + 1]); bs.push(d[o + 2])
+  }
+  var bg = [med3(rs[0], rs[1], rs[2]), med3(gs[0], gs[1], gs[2]), med3(bs[0], bs[1], bs[2])]
+  var spread = 0
+  for (i = 0; i < pts.length; i++) {
+    spread = Math.max(spread, Math.abs(rs[i] - bg[0]) + Math.abs(gs[i] - bg[1]) + Math.abs(bs[i] - bg[2]))
+  }
+  return { bg: bg, spread: spread / 255 }
+}
+
+function bake () {
+  var v = vals()
+  var k = Math.min(1, v.px / Math.max(img.width, img.height))
+  work.width = out.width = Math.round(img.width * k)
+  work.height = out.height = Math.round(img.height * k)
+  wctx.drawImage(img, 0, 0, work.width, work.height)
+  var src = wctx.getImageData(0, 0, work.width, work.height)
+  var d = src.data, w = work.width, h = work.height
+  var s = sampleBg(d, w, h)
+  if (!DO_KEY) {
+    octx.putImageData(src, 0, 0)
+    var sc0 = document.getElementById('cSrc')
+    sc0.width = out.width; sc0.height = out.height
+    sc0.getContext('2d').drawImage(img, 0, 0, out.width, out.height)
+    say('不键控（背景板）· 缩放 ' + work.width + 'x' + work.height)
+    return
+  }
+  var br = s.bg[0], bg2 = s.bg[1], bb = s.bg[2]
+  say('底色取样 rgb(' + br + ',' + bg2 + ',' + bb + ') · 背景平坦度 ' + (s.spread * 100).toFixed(1) + '%' +
+      (s.spread > 0.09 ? '  ⚠ 背景不平，键控会留边，建议重新出图' : ''))
+  /* 溢色通道：背景里最突出的两个通道，键控后要在半透明边缘压下去 */
+  var chs = [[br, 'r'], [bg2, 'g'], [bb, 'b']].sort(function (a, b) { return b[0] - a[0] })
+  var spill = [chs[0][1], chs[1][1]]
+  var keep = chs[2][1]
+  var t1 = v.t0 + v.t1
+  var n = 0, edge = 0
+  for (var i = 0; i < d.length; i += 4) {
+    var r = d[i], g = d[i + 1], b = d[i + 2]
+    var dd = Math.sqrt((r - br) * (r - br) + (g - bg2) * (g - bg2) + (b - bb) * (b - bb)) / 441.672
+    var a = smooth(v.t0, t1, dd)
+    if (v.sh > 0 && a > 0 && a < 1) edge++
+    /* 收缩：把软边整体往「不透明」推一点，吃掉一圈键不干净的毛边 */
+    if (v.sh > 0) a = smooth(0.5 - 0.5 * Math.min(1, v.sh / 4), 1, a)
+    if (a < 0.004) { d[i + 3] = 0; continue }
+    if (v.sp > 0 && a < 0.999) {
+      var ref = keep === 'r' ? r : (keep === 'g' ? g : b)
+      var over = function (c) { var lim = ref + (255 - ref) * (1 - v.sp); return c > lim ? lim + (c - lim) * (1 - v.sp) * 0.35 : c }
+      if (spill[0] === 'r') r = over(r); if (spill[0] === 'g') g = over(g); if (spill[0] === 'b') b = over(b)
+      if (spill[1] === 'r') r = over(r); if (spill[1] === 'g') g = over(g); if (spill[1] === 'b') b = over(b)
+    }
+    d[i] = r; d[i + 1] = g; d[i + 2] = b; d[i + 3] = Math.round(a * 255)
+    n++
+  }
+  octx.putImageData(src, 0, 0)
+  var sc = document.getElementById('cSrc')
+  sc.width = out.width; sc.height = out.height
+  sc.getContext('2d').drawImage(img, 0, 0, out.width, out.height)
+  say('保留 ' + n + ' / ' + (w * h) + ' 像素（' + (100 * n / (w * h)).toFixed(1) + '%）· 软边 ' + edge)
+}
+
+function save () {
+  var name = P('inName').value
+  /* 只允许 <场景>/<层> 两段，杜绝任何路径写法 */
+  if (!/^[A-Za-z0-9._-]+\/[A-Za-z0-9._-]+$/.test(name)) { say('✗ 名字必须形如 custodes/vat-figure'); return }
+  var url = out.toDataURL('image/' + FMT, 0.9)
+  fetch('/render/save?name=' + encodeURIComponent('plate-' + name.replace('/', '-') + '.' + FMT),
+    { method: 'POST', body: url })
+    .then(function (r) { return r.json() })
+    .then(function (j) { say('✓ 落盘 ' + j.path + ' · ' + (j.bytes / 1024).toFixed(0) + 'KB（再手动挪进 lib/assets/frames/）') })
+    .catch(function (e) { say('✗ ' + e) })
+}
+
+P('btnRun').onclick = bake
+P('btnSave').onclick = save;
+['inT0', 'inT1', 'inSp', 'inSh', 'inPx'].forEach(function (id) {
+  P(id).oninput = function () { showVals(); bake() }
+})
+showVals()
+img.onload = function () { say('原图 ' + img.width + 'x' + img.height + ' · ' + SRC); bake() }
+img.onerror = function () { say('✗ 原图载入失败：' + SRC) }
+img.src = SRC
+</script>
+</body>
+</html>

@@ -28,7 +28,7 @@ function ok(cond, label) {
 
 /* ── 0) 语法检查（node --check 对浏览器脚本同样只验语法）────────────────── */
 console.log('\n[语法]')
-for (const rel of ['lib/index.js', 'lib/splash.js', 'lib/w40k.js', 'lib/client.js', 'lib/score.js']) {
+for (const rel of ['lib/index.js', 'lib/splash.js', 'lib/w40k.js', 'lib/client.js', 'lib/score.js', 'lib/custodes.js']) {
   try {
     execFileSync(process.execPath, ['--check', path.join(PKG_ROOT, rel)], { stdio: 'pipe' })
     ok(true, rel + ' 语法有效')
@@ -36,7 +36,7 @@ for (const rel of ['lib/index.js', 'lib/splash.js', 'lib/w40k.js', 'lib/client.j
     ok(false, rel + ' 语法有效 —— ' + String(err.stderr || err.message).split('\n')[0])
   }
 }
-for (const rel of ['lib/splash.css', 'lib/w40k.css']) {
+for (const rel of ['lib/splash.css', 'lib/w40k.css', 'lib/custodes.css']) {
   ok(fs.existsSync(path.join(PKG_ROOT, rel)), rel + ' 存在')
 }
 
@@ -83,6 +83,8 @@ ok(routes.some(r => r.path === '/jt-startup/w40k.js'), '注册了 /jt-startup/w4
 ok(routes.some(r => r.path === '/jt-startup/w40k.css'), '注册了 /jt-startup/w40k.css')
 ok(routes.some(r => r.path === '/jt-startup/score.js'), '注册了 /jt-startup/score.js（两套共用的音轨引擎）')
 ok(routes.some(r => r.path === '/jt-startup/voice'), '注册了 /jt-startup/voice 前缀路由')
+ok(routes.some(r => r.path === '/jt-startup/custodes.js'), '注册了 /jt-startup/custodes.js')
+ok(routes.some(r => r.path === '/jt-startup/custodes.css'), '注册了 /jt-startup/custodes.css')
 ok(taps.length === 1, '注册了 tapIndex')
 
 const injected = taps[0]('<html><head></head><body></body></html>')
@@ -171,6 +173,25 @@ ok(injectedW.includes('#0a0807'), 'w40k 启动底色为近黑')
 ok(injectedW.includes('__JT_STARTUP_SCRIPT_URL__'), '内联注入 scriptUrl（replay/自举用）')
 ok(injectedW.includes('__JT_STARTUP_SCORE_URL__'), '内联注入 scoreUrl（自举时引擎能补挂）')
 
+/* ── 3.6) 第三风格（禁军）：分组、播种、夹取、按 style 注入 ─────────────── */
+console.log('\n[第三风格 · 禁军]')
+const postedG = await callRoute('/jt-startup/config', 'POST', JSON.stringify({
+  patch: { style: 'custodes', custodes: { rank: 'SENTINEL', holdSeconds: 99, cohort: 'SECOND BROTHERHOOD' } }
+}))
+const pg = JSON.parse(postedG.body.toString())
+ok(pg.ok === true && pg.config.style === 'custodes', 'POST style=custodes 生效')
+ok(pg.config.rank === 'SENTINEL' && pg.config.cohort === 'SECOND BROTHERHOOD',
+  'config 扁平化视图带禁军字段（rank/cohort）')
+ok(pg.config.holdSeconds === 5, 'holdSeconds 越界被夹到上限 5（再长就顶到 9 秒兜底）')
+ok(pg.config.identity === 'JT-Levent', '禁军名号未填时从极兔身份播种')
+ok(pg.groups.custodes && pg.groups.jt.identity === 'JT-Levent' && pg.groups.w40k.rank === 'MAGOS',
+  '深合并：只 patch 禁军组不动另两组')
+const injectedG = taps[0]('<html><head></head><body></body></html>')
+ok(injectedG.includes('src="/jt-startup/custodes.js"'), 'style=custodes 时注入 custodes.js')
+ok(!injectedG.includes('src="/jt-startup/w40k.js"'), 'style=custodes 时不再注入 w40k.js')
+ok(injectedG.includes('jtg-root'), '禁军根节点带 jtg-root')
+ok(injectedG.includes('#0a0908'), '禁军启动底色为黑曜石')
+
 /* 引擎必须先于 runtime 落地 —— defer 脚本按文档顺序执行，顺序错了首幕没声音 */
 const iScore = injectedW.indexOf('src="/jt-startup/score.js"')
 const iRun = injectedW.indexOf('src="/jt-startup/w40k.js"')
@@ -221,6 +242,24 @@ ok(w40k.includes('/jt-startup/inventory.json'), 'w40k.js 唤醒圣物读真实�
 const w40kCss = fs.readFileSync(path.join(PKG_ROOT, 'lib', 'w40k.css'), 'utf8')
 ok(w40kCss.includes('.jtw-root') && w40kCss.includes('.jtw-root.jts-gone'), 'w40k.css 有 jtw-root 基础样式与揭幕退场')
 
+/* 禁军 runtime：契约同协议，但结构是三段式 + 名录驱动 + 按住交互 */
+const guardJs = fs.readFileSync(path.join(PKG_ROOT, 'lib', 'custodes.js'), 'utf8')
+const guardCss = fs.readFileSync(path.join(PKG_ROOT, 'lib', 'custodes.css'), 'utf8')
+ok(guardJs.includes('window.__JT_STARTUP_LOADED__'), 'custodes.js 有重入护栏（同协议）')
+ok(guardJs.includes("'jt-startup:shown'"), 'custodes.js 会话判定键与 Host 一致')
+ok(guardJs.includes("root.classList.remove('jts-boot')"), 'custodes.js 接管后摘 jts-boot')
+ok(guardJs.includes('/jt-startup/inventory.json'), 'custodes.js 点名单读真实名录')
+ok(guardJs.includes('setInterval') && guardJs.includes('document.hidden'),
+  'custodes.js 时间线不挂在 rAF 上（后台标签也能走完；挂在 rAF 会把人锁死在屏前）')
+ok(guardJs.includes('planContinuous'), 'custodes.js 时长预算向引擎取（与离线渲染台同一算式）')
+ok(guardJs.includes('rosterReady') && guardJs.includes('DATA_WAIT'),
+  '闸门段等名录到手才开始（否则点名会被当成 0.9s 闪幕）')
+ok(guardJs.includes('if (v > before) holdTimer = 0'),
+  '举盾超时按「无进展时长」计（按总时长计会让失手掉盾的人再也举不满）')
+ok(guardJs.includes('maxOnStage') && guardJs.includes('overflow'), '超出上限的条目归并成 +N，不拉长片长')
+ok(guardCss.includes('.jtg-root') && guardCss.includes('.jtg-root.jts-gone'), 'custodes.css 有根样式与退场')
+ok(guardCss.includes('[hidden]'), 'custodes.css 保住 hidden 属性（否则点名/举盾面板关不掉）')
+
 /* ── 音轨引擎与分风格旁白：lib/score.js 是唯一一份 ─────────────────────────
    引擎是浏览器脚本，但尾部有 globalThis 兜底，所以在 Node 里能直接加载真实谱表来断言，
    不用拿正则猜数据。 */
@@ -244,6 +283,24 @@ for (const st of ['jt', 'w40k']) {
   }))
 }
 ok(outOfRange.length === 0, '全部 cue 的 at/to 落在 0..1 幕内比例' + (outOfRange.length ? ' —— 越界：' + outOfRange.join(',') : ''))
+
+/* continuous（禁军）：没有幕表，片长由「真实条数 + 按住多久」决定 */
+ok(SCORE.TIMELINE_KIND.jt === 'phases' && SCORE.TIMELINE_KIND.w40k === 'phases' &&
+   SCORE.TIMELINE_KIND.custodes === 'continuous', '三套时间线种类：前两套幕表驱动，禁军进度驱动')
+const bed = SCORE.CONTINUOUS.custodes.bed
+ok(bed.cutoff[1] > bed.cutoff[0] * 4 && bed.wet[1] > bed.wet[0] && bed.choirGain[1] > bed.choirGain[0],
+  '声床随 progress 真的在打开（滤波、湿度、唱垫都是上升曲线）')
+const p12 = SCORE.planContinuous('custodes', { items: 12, vigil: 3.2 })
+const p15 = SCORE.planContinuous('custodes', { items: 15, vigil: 3.2 })
+const p40 = SCORE.planContinuous('custodes', { items: 40, vigil: 3.2 })
+ok(p15.onStage === 12 && p15.overflow === 3, '名录 15 条 → 上镜 12 位、溢出 3 位归并')
+ok(p40.onStage === p12.onStage && p40.total === p12.total, '清单再长也封顶：40 条与 12 条同长（不撞 9 秒兜底）')
+ok(p12.total > 15 && p12.total < 27, '12 条时整片 ' + p12.total.toFixed(1) + 's，在「约 30s」承诺内')
+ok(Math.abs(SCORE.planContinuous('custodes', { items: 9, speed: 2 }).total * 2 -
+    SCORE.planContinuous('custodes', { items: 9, speed: 1 }).total) < 0.01,
+  'continuous 也跟随 speed 变速（2× 时片长减半）')
+ok(SCORE.NARRATION.custodes.every(c => c.file && (c.p != null || c.on)),
+  '禁军旁白按 progress 阈值或事件触发，不绑幕号（中段长度可变，绑幕必错拍）')
 
 /* 幕时长是跨文件契约：runtime 的 PHASES[].hold 改了而 PHASE_HOLDS 没跟上，旁白窗口就按
    错误时长算（本次 w40k 唤醒幕 1900→2300 就得两边同步）。 */
@@ -276,6 +333,16 @@ for (const st of ['jt', 'w40k']) {
 }
 ok(!fs.existsSync(path.join(voiceDir, 'phase-0.wav')), '旧共用 clip 已退役，不再随包分发')
 
+/* 禁军旁白：qwen3-tts-vc 需在百炼控制台开通才能合成。没录的状态是「整组缺失」，
+   runtime 取不到 wav 会静默跳过（不出声也不报错）—— 只禁止半录的混装状态。 */
+const gCues = SCORE.NARRATION.custodes || []
+const gHave = gCues.filter(c => fs.existsSync(path.join(voiceDir, 'custodes', c.file + '.wav'))).length
+ok(gHave === 0 || gHave === gCues.length, '禁军旁白要么整组齐全要么整组待录，不混装（' + gHave + '/' + gCues.length + '）')
+if (gHave < gCues.length) {
+  console.log('  note  禁军旁白 ' + (gCues.length - gHave) + ' 句待录：开通模型后跑' +
+    ' node tools/audio/tts.mjs batch --style=custodes && node tools/audio/tts.mjs promote --style=custodes')
+}
+
 const hostJs = fs.readFileSync(path.join(PKG_ROOT, 'lib', 'index.js'), 'utf8')
 ok(hostJs.includes("'/voice'") && hostJs.includes('VOICE_FILES'), 'Host 的 /voice 白名单来自 manifest')
 ok(hostJs.includes("'voice'"), 'voice 仍是顶层配置键')
@@ -287,6 +354,67 @@ for (const [name, src] of [['splash.js', splash], ['w40k.js', w40k]]) {
     name + ' 用 JTSCORE 建引擎并在收尾停音')
   ok(src.includes('scoreUrl') && src.includes('onload'),
     name + ' 有引擎缺失时的补挂 + 到货续播兜底')
+}
+
+/* ── 预渲染底片管线：静帧承载画质，程序化层承载运动 ───────────────────── */
+{
+  const framesDir = path.join(PKG_ROOT, 'lib', 'assets', 'frames', 'custodes')
+  const names = [...guardJs.matchAll(/var PLATE_NAMES = \[([^\]]*)\]/g)]
+    .flatMap(m => [...m[1].matchAll(/'([^']+)'/g)].map(x => x[1]))
+  ok(names.length > 0, 'runtime 声明了底片清单 PLATE_NAMES（' + names.length + ' 张）')
+
+  /* 底片可以缺失（退回程序化），但清单里点了名字就必须有文件，否则是白写的死引用 */
+  const missing = names.filter(n => !fs.existsSync(path.join(framesDir, n + '.webp')))
+  ok(missing.length === 0, 'PLATE_NAMES 每一张都已落盘（缺：' + (missing.join(', ') || '无') + '）')
+
+  const onDisk = fs.existsSync(framesDir) ? fs.readdirSync(framesDir).filter(f => f.endsWith('.webp')) : []
+  const orphans = onDisk.filter(f => !names.includes(f.replace(/\.webp$/, '')))
+  ok(orphans.length === 0, 'frames 目录没有未被引用的底片（多余：' + (orphans.join(', ') || '无') + '）')
+
+  const totalKB = onDisk.reduce((s, f) => s + fs.statSync(path.join(framesDir, f)).size, 0) / 1024
+  ok(totalKB < 2048, '底片总体积 ' + totalKB.toFixed(0) + 'KB < 2MB（包体积守门）')
+
+  /* 降级链路：读不到底片必须退回程序化，且绝不能因此把人卡在屏前 */
+  ok(/setTimeout\(go,\s*\d+\)/.test(guardJs), '底片加载有超时兜底，不会无限等')
+  const cap = Number((guardJs.match(/setTimeout\(go,\s*(\d+)\)/) || [, '0'])[1])
+  ok(cap > 0 && cap <= 1500, '底片等待上限 ' + cap + 'ms（够加载又不拖启动）')
+  ok(guardJs.includes("classList.add('jtg-noart')"), '底片缺失时打上 jtg-noart 标记')
+  ok(/capEn\.textContent\s*=\s*'PROCEDURAL FALLBACK/.test(guardJs), '底片缺失时在界面上如实写明是程序化兜底')
+
+  /* 四个节拍都要走底片优先、程序化兜底（v2：一个空间一条镜头，节拍而非幕） */
+  for (const [fn, fb] of [['drawAwaken', 'fallbackAwaken'], ['drawMuster', 'fallbackMuster'],
+    ['drawVigil', 'fallbackVigil'], ['drawSworn', 'fallbackSworn']]) {
+    ok(guardJs.includes('function ' + fn), fn + ' 已定义')
+    ok(guardJs.includes('function ' + fb) && guardJs.includes(fb + '('), fn + ' 有对应的程序化兜底 ' + fb)
+  }
+  ok((guardJs.match(/artOk\(\)/g) || []).length >= 4, '四个节拍各自按底片是否在场分派')
+
+  /* 叠光必须走离屏 source-atop —— 直接在主画布上叠会糊到背景，描边又对不上静帧羽尖 */
+  ok(guardJs.includes("globalCompositeOperation = 'source-atop'"), '离屏层用 source-atop 沿静帧自身轮廓叠光')
+  ok(/scratch\.width = Math\.max\(1, Math\.ceil\(w \* DPR\)\)|Math\.ceil\(w \* DPR\)/.test(guardJs),
+    '离屏层按 DPR 开尺寸，叠出来的光不糊')
+
+  /* 静帧里长枪在图片左侧，躯干中心不在图片中心 —— 对准错了盾就会歪 */
+  ok(/cx: x \+ dw \* 0\.5\d?/.test(guardJs), '主体层返回估算的躯干中心，盾与镜头都对它取齐')
+
+  /* v2 的运动学不变量：这三条就是「有重量」和「贴图平移」的区别 */
+  ok(guardJs.includes('function springTo') && /springTo\(v,/.test(guardJs),
+    '盾位由弹簧追随压力 —— 松手才会弹落，而不是值一撤就消失')
+  ok(guardJs.includes('easeOutBack'), '落位用 easeOutBack（预备-发力-安定），不是线性滑入')
+  ok(/v \+ \(dt \/ Math\.max\(0\.4, C\.holdSeconds\)\) \* \(1 - v \* 0\./.test(guardJs),
+    '举盾压力是渐近曲线（越举越沉），不是匀速计时器')
+
+  /* 交互状态必须可断言：界面上不留百分比读数，就换成 CSS 变量 */
+  ok(/setProperty\('--jtg-v'/.test(guardJs), '压力以 --jtg-v 暴露，测试台能断言松手回落')
+  /* 装饰性绘制（胶片颗粒）在模块顶层的 resize() 里被调用：抛出去等于整段启动失败 */
+  ok(/function grainTile\(\)\s*\{\s*try \{/.test(guardJs), '胶片颗粒预生成有 try 保护，不拖垮启动')
+
+  /* Host 侧路由：两段白名单，不拼用户输入 */
+  ok(hostJs.includes("ROUTE_BASE + '/frames'"), 'Host 注册了 /frames 路由')
+  ok(/\/\^\(\[a-z0-9-\]\+\)\\\/\(\[a-z0-9-\]\+\)\\\.webp\$\/\.exec\(rel\)/.test(hostJs),
+    '/frames 路径走严格正则，杜绝穿越')
+  ok(/RUNTIMES\[m\[1\]\]/.test(hostJs), '/frames 的风格段受 RUNTIMES 白名单约束')
+  ok(hostJs.includes("'image/webp'"), '/frames 返回 webp 的 Content-Type')
 }
 
 fs.rmSync(home, { recursive: true, force: true })

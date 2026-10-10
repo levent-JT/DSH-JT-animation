@@ -95,6 +95,7 @@
       <select id="inStyle">
         <option value="jt">极兔干线 · Express Trunk</option>
         <option value="w40k">战锤40K · 机神祷文</option>
+        <option value="custodes">战锤禁军 · 黄金誓约</option>
       </select>
     </label>
     <div class="row2" id="jtFields">
@@ -119,6 +120,22 @@
         <label>编序<input id="inWCipher" type="text" value="JT01919561"></label>
       </div>
     </div>
+    <div id="guardFields" style="display:none; flex-direction:column; gap:8px">
+      <div class="row2">
+        <label>名号<input id="inGName" type="text" value="JT-Levent"></label>
+        <label>职阶<input id="inGRank" type="text" value="KEEPSAKE"></label>
+      </div>
+      <div class="row2">
+        <label>同袍队<input id="inGCohort" type="text" value="FIRST BROTHERHOOD"></label>
+        <label>盾徽<input id="inGCipher" type="text" value="JT01919561"></label>
+      </div>
+      <div class="row2">
+        <label>守地<input id="inGStation" type="text" value="IMPERIAL PALACE · TERRA"></label>
+        <label>举盾力度 <span id="holdVal">2.6s</span>
+          <input id="inGHold" type="range" min="1.2" max="5" step="0.1" value="2.6">
+        </label>
+      </div>
+    </div>
     <label>速度 <span id="speedVal">1.00×</span>
       <input id="inSpeed" type="range" min="0.5" max="2" step="0.05" value="1">
     </label>
@@ -130,10 +147,11 @@
     <div class="tip">
       离线预览说明：切换风格即时换装（跨风格热切换走的就是设置页「立即预览」的同一套逻辑）；
       <kbd>Enter</kbd>/<kbd>Space</kbd>/点击 = 确认节点（极兔可横向拖动旋转地球）；
-      <kbd>Esc</kbd> 跳过。正式环境里「权限认证/授权仪式」读取 ~/.dsh 真实 skills 与插件清单，
+      <kbd>Esc</kbd> 跳过；禁军那套的尾段是<kbd>按住</kbd>不放（鼠标按住或按住空格），松手盾会落回去。正式环境里「权限认证/授权仪式/点名」读取 ~/.dsh 真实清单——
+      禁军的点名列队长度就等于你的真实条数。
       此处 file:// 无法访问宿主接口，勾选「演示清单」可看该阶段效果；
       URL 加 <kbd>?motion=full</kbd> 可在系统"减弱动态效果"下仍预览完整节奏，
-      <kbd>?style=w40k</kbd> 直接进 40K。
+      <kbd>?style=w40k</kbd> / <kbd>?style=custodes</kbd> 直接进对应风格。
     </div>
   </div>
 </div>
@@ -147,12 +165,16 @@
     }
   }
 
-  var START_STYLE = location.search.indexOf('style=w40k') !== -1 ? 'w40k' : 'jt'
-  /* 音轨引擎是两套共用的一份：预览台、运行时、audio-lab 渲染台读同一个文件 */
+  var START_STYLE = (function () {
+    var m = /style=(jt|w40k|custodes)/.exec(location.search)
+    return m ? m[1] : 'jt'
+  })()
+  /* 音轨引擎是三套共用的一份：预览台、运行时、tools/audio 渲染台读同一个文件 */
   var SCORE_JS = '../lib/score.js'
   var STYLE_FILE = {
     jt: { css: '../lib/splash.css', js: '../lib/splash.js' },
-    w40k: { css: '../lib/w40k.css', js: '../lib/w40k.js' }
+    w40k: { css: '../lib/w40k.css', js: '../lib/w40k.js' },
+    custodes: { css: '../lib/custodes.css', js: '../lib/custodes.js' }
   }
 
   /* 演示清单：结构和宿主 /jt-startup/inventory.json 一致，明确标注"演示" */
@@ -194,6 +216,17 @@
         cipher: $('inWCipher').value.trim() || 'JT0001'
       })
     }
+    if (style === 'custodes') {
+      return Object.assign(base, {
+        accent: '#c8a24a',
+        identity: $('inGName').value.trim() || 'JT-DEVELOPER',
+        rank: $('inGRank').value.trim() || 'KEEPSAKE',
+        cohort: $('inGCohort').value.trim() || 'FIRST BROTHERHOOD',
+        station: $('inGStation').value.trim() || 'IMPERIAL PALACE · TERRA',
+        cipher: $('inGCipher').value.trim() || 'JT0001',
+        holdSeconds: Number($('inGHold').value) || 2.6
+      })
+    }
     return Object.assign(base, {
       theme: $('inTheme').value,
       accent: '#d8232a',
@@ -204,10 +237,13 @@
   }
 
   function syncFieldVisibility() {
-    var isW = $('inStyle').value === 'w40k'
-    $('jtFields').style.display = isW ? 'none' : 'grid'
-    $('jtThemeRow').style.display = isW ? 'none' : 'grid'
+    var st = $('inStyle').value
+    var isW = st === 'w40k'
+    var isG = st === 'custodes'
+    $('jtFields').style.display = (isW || isG) ? 'none' : 'grid'
+    $('jtThemeRow').style.display = (isW || isG) ? 'none' : 'grid'
     $('w40kFields').style.display = isW ? 'flex' : 'none'
+    $('guardFields').style.display = isG ? 'flex' : 'none'
   }
 
   /** 挂载指定风格：换 CSS link、重挂 runtime 脚本（与设置页跨风格预览同款协议）。 */

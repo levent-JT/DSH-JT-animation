@@ -2,3 +2,13 @@
 node_modules/
 .DS_Store
 Thumbs.db
+# 密钥与渲染产物不入库
+tools/audio/.env
+tools/audio/out/
+# 参考图只用于本地研究，绝不入库
+# （画出来的形制来自观察，不是像素拷贝）
+tools/refs/raw/
+tools/refs/plates/
+# 已退役的旧共用旁白 clip：留在本地做对照，不进库
+# （smoke 已断言不再随包分发）
+tools/audio/legacy-voice/

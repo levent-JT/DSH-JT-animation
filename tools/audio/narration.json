@@ -1,0 +1,258 @@
+{
+  "_comment": "每套风格一条旁白轨。budget_ms 取该阶段 1× 速度下的实际画面时长（PHASES[].hold），台词必须短于预算，否则会压进下一幕。",
+  "voice": {
+    "language": "en",
+    "target_model": "qwen3-tts-vc-2026-01-22",
+    "reference": {
+      "sources": [
+        "phase-0.wav",
+        "phase-2.wav",
+        "phase-3.wav",
+        "phase-4.wav",
+        "phase-5.wav"
+      ],
+      "gap_ms": 260,
+      "note": "现有 wav 已是 24kHz mono PCM16、纯人声无 BGM，拼接后约 11s，落在官方推荐的 10-20s 参考区间。",
+      "dir": "tools/audio/legacy-voice"
+    }
+  },
+  "styles": {
+    "jt": {
+      "_comment": "极兔干线：全球研发调度台口吻，短句、陈述式、无修辞。BOOT 1.3s 与 GRANTED 1.3s 只放得下一两个词，长镜头把声音留给配乐。",
+      "lines": [
+        {
+          "id": "jt-0",
+          "phase": 0,
+          "hold_ms": 1300,
+          "play_at_ms": 0,
+          "text": null,
+          "why": "1.3s 容不下可懂句，开场由音轨的起爆承担"
+        },
+        {
+          "id": "jt-1",
+          "phase": 1,
+          "hold_ms": 6750,
+          "play_at_ms": 700,
+          "text": "Jakarta. Two thousand fifteen.",
+          "file": "origin"
+        },
+        {
+          "id": "jt-2",
+          "phase": 2,
+          "hold_ms": 2400,
+          "play_at_ms": 200,
+          "text": "Workspace linked.",
+          "file": "link"
+        },
+        {
+          "id": "jt-3",
+          "phase": 3,
+          "hold_ms": 2400,
+          "play_at_ms": 200,
+          "text": "Operator verified.",
+          "file": "profile"
+        },
+        {
+          "id": "jt-4",
+          "phase": 4,
+          "hold_ms": 2600,
+          "play_at_ms": 50,
+          "text": "Loading local skills and plugins.",
+          "file": "auth"
+        },
+        {
+          "id": "jt-5",
+          "phase": 5,
+          "hold_ms": 1300,
+          "play_at_ms": 0,
+          "text": null,
+          "why": "实测该音色短句有 ~1.2s 起收开销，1.3s 幕放不下；ACCESS GRANTED 由音轨和弦爆点承担"
+        },
+        {
+          "id": "jt-6",
+          "phase": 6,
+          "hold_ms": 3600,
+          "play_at_ms": 300,
+          "text": "Welcome back, operator.",
+          "file": "online"
+        },
+        {
+          "id": "jt-warn",
+          "phase": 5,
+          "hold_ms": 1300,
+          "play_at_ms": 120,
+          "text": "Some local resources need attention.",
+          "spill": true,
+          "when": "inventory 部分失败",
+          "spill_into_ms": 3600,
+          "file": "warn"
+        },
+        {
+          "id": "jt-unavailable",
+          "phase": 5,
+          "hold_ms": 1300,
+          "play_at_ms": 120,
+          "text": "Local inventory is unavailable.",
+          "spill": true,
+          "when": "inventory 读取失败",
+          "spill_into_ms": 3600,
+          "file": "unavailable"
+        }
+      ]
+    },
+    "w40k": {
+      "_comment": "战锤40K：机械教礼仪英文，第二人称祝祷，不出现任何企业词汇（skills/plugins/workspace/profile 全部换掉）。Omnissiah 有意吞音风险，默认用 Machine God，需要时再切 v 版。",
+      "lines": [
+        {
+          "id": "w40k-0",
+          "phase": 0,
+          "hold_ms": 2300,
+          "play_at_ms": 60,
+          "text": "Awaken, machine spirit.",
+          "file": "awaken"
+        },
+        {
+          "id": "w40k-1",
+          "phase": 1,
+          "hold_ms": 7400,
+          "play_at_ms": 1200,
+          "text": "Terra lights the dark.",
+          "file": "via"
+        },
+        {
+          "id": "w40k-2",
+          "phase": 2,
+          "hold_ms": 2400,
+          "play_at_ms": 200,
+          "text": "The uplink is open.",
+          "file": "uplink"
+        },
+        {
+          "id": "w40k-3",
+          "phase": 3,
+          "hold_ms": 2500,
+          "play_at_ms": 200,
+          "text": "Your name is inscribed.",
+          "file": "inscribe"
+        },
+        {
+          "id": "w40k-4",
+          "phase": 4,
+          "hold_ms": 2900,
+          "play_at_ms": 200,
+          "text": "The relics awaken.",
+          "file": "relics"
+        },
+        {
+          "id": "w40k-5",
+          "phase": 5,
+          "hold_ms": 1400,
+          "play_at_ms": 0,
+          "text": null,
+          "why": "1.4s 压印幕只够一记撞击音，人声会抢掉撞击"
+        },
+        {
+          "id": "w40k-6",
+          "phase": 6,
+          "hold_ms": 3600,
+          "play_at_ms": 350,
+          "text": "May the Machine God be with you.",
+          "file": "benedictio"
+        },
+        {
+          "id": "w40k-warn",
+          "phase": 5,
+          "hold_ms": 1400,
+          "play_at_ms": 150,
+          "text": "Some relics remain unawakened.",
+          "spill": true,
+          "when": "名录部分失败",
+          "spill_into_ms": 3600,
+          "file": "warn"
+        },
+        {
+          "id": "w40k-unavailable",
+          "phase": 5,
+          "hold_ms": 1400,
+          "play_at_ms": 150,
+          "text": "The codex could not be read.",
+          "spill": true,
+          "when": "名录读取失败",
+          "spill_into_ms": 3600,
+          "file": "unavailable"
+        }
+      ]
+    },
+    "custodes": {
+      "_comment": "禁军不按幕排：p 是整片 progress 阈值，on 是运行时事件。台词贴合三段式实际内容——点名段念的是「清点武备」，尾段直接指示「按住」。",
+      "lines": [
+        {
+          "id": "custodes-wake",
+          "p": 0.04,
+          "file": "wake",
+          "text": "Forged of the Emperor's own flesh.",
+          "budget_ms": 4800,
+          "seg": "培育槽"
+        },
+        {
+          "id": "custodes-gate",
+          "p": 0.3,
+          "file": "gate",
+          "text": "The gate opens.",
+          "budget_ms": 2600,
+          "seg": "闸门"
+        },
+        {
+          "id": "custodes-muster",
+          "p": 0.55,
+          "file": "muster",
+          "text": "Your arms are counted.",
+          "budget_ms": 6000,
+          "seg": "点名（长度随条数）"
+        },
+        {
+          "id": "custodes-muster-thin",
+          "p": 0.55,
+          "file": "muster-thin",
+          "text": "The muster is incomplete.",
+          "budget_ms": 6000,
+          "when": "清单没读到",
+          "variant": "unavailable"
+        },
+        {
+          "id": "custodes-vigil",
+          "p": 0.78,
+          "file": "vigil",
+          "text": "Raise your shield, and hold.",
+          "budget_ms": 5200,
+          "seg": "举盾（指示交互）"
+        },
+        {
+          "id": "custodes-sworn",
+          "on": "lock",
+          "file": "sworn",
+          "text": "The oath is sworn.",
+          "budget_ms": 3400,
+          "variant": "lock",
+          "when": "举满"
+        },
+        {
+          "id": "custodes-unwatched",
+          "on": "timeout",
+          "file": "unwatched",
+          "text": "The vigil waits.",
+          "budget_ms": 3400,
+          "variant": "timeout",
+          "when": "超时放行"
+        }
+      ]
+    }
+  },
+  "rules": {
+    "calibration": "实测该音色 ~58-84ms/字符，且短句有约 1.2s 起收开销（'Access granted.' 15 字符 = 1.49s）。hold < 1800ms 的幕不放旁白。",
+    "spill": "失败播报（warn/unavailable）发生在 GRANTED/CONSECRATIO 一闪而过的幕，允许跨进终幕窗口，预算按两幕之和计",
+    "speed_gate": "speed > 1.5 时不播旁白（阶段时长除以 speed 后台词必然跨幕），只留音轨",
+    "ducking": "旁白播放期间音轨低频与琶音 duck 6 dB，句尾 300ms 内恢复",
+    "skip": "Esc / 跳过 / 揭幕瞬间整体静音（沿用现有行为）"
+  }
+}

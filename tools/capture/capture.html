@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>画面验收台 · capture</title>
+<style>
+  body { margin: 0; background: #0b0c0d; color: #cfd3d6; font: 12px/1.7 ui-monospace, Consolas, monospace; }
+  #stage { position: relative; width: 100vw; height: 70vh; overflow: hidden; }
+  #stage .jts-root { position: absolute !important; }
+  pre { padding: 10px 14px; white-space: pre-wrap; }
+</style>
+<script>
+  /* 存在理由：内嵌/后台视口里 Chrome 会停掉 requestAnimationFrame，canvas 一帧都不画，
+     于是「我觉得我画了」和「实际上画出来什么」完全无法对照 —— 美术就没法验收。
+     在 runtime 落地之前把 rAF 换成 setTimeout 驱动，后台也能出帧。
+     只影响这个页面，不碰任何发布代码。 */
+  window.requestAnimationFrame = function (cb) { return setTimeout(function () { cb(performance.now()) }, 16) }
+  window.cancelAnimationFrame = function (id) { clearTimeout(id) }
+</script>
+</head>
+<body>
+<div id="stage"></div>
+<pre id="log">载入中…</pre>
+<script>
+  var q = new URLSearchParams(location.search)
+  var STYLE = q.get('style') || 'custodes'
+  var SHOTS = (q.get('shots') || '1.2,2.6,4.2,6.4,9,11.6,14,16.4,19.5').split(',').map(Number)
+  var PRESS = q.get('press') === '1'
+  var FILES = {
+    jt: { css: '../../lib/splash.css', js: '../../lib/splash.js', root: 'jts-root' },
+    w40k: { css: '../../lib/w40k.css', js: '../../lib/w40k.js', root: 'jts-root jtw-root' },
+    custodes: { css: '../../lib/custodes.css', js: '../../lib/custodes.js', root: 'jts-root jtg-root' }
+  }
+  var f = FILES[STYLE] || FILES.custodes
+  var log = []
+  function say (m) { log.push(m); document.getElementById('log').textContent = log.join('\n'); console.log(m) }
+
+  /* 演示清单：与预览台同结构，用来驱动「点名 = 真实条数」这一段 */
+  function demo () {
+    var skills = [], plugins = []
+    for (var i = 0; i < 4; i++) skills.push({ name: 'java-dev,idea-mcp-first,requirement-analysis,delegate-code-to-agent'.split(',')[i], source: '~/.dsh/skills/x' + i })
+    var p = ['dsh-jt-startup@0.5.0', 'dsh-better-sidebar@0.24.1', 'dsh-free-search@0.8.1', 'dshmarket@1.66.11', 'dsh-update-checker@1.7.1']
+    for (var j = 0; j < p.length; j++) plugins.push({ name: p[j].split('@')[0], version: p[j].split('@')[1], source: '~/.dsh/profiles/desktop', enabled: j !== 3 })
+    return { ok: true, elapsed_ms: 143, skills: skills, plugins: plugins }
+  }
+
+  var cfg = {
+    style: STYLE, speed: Number(q.get('speed')) || 1, mode: 'always', enabled: true,
+    requireInteraction: true, allowSkip: false, sound: false, voice: false,
+    inventory: true, background: true, accent: STYLE === 'custodes' ? '#c8a24a' : (STYLE === 'w40k' ? '#8f1f1f' : '#d8232a'),
+    identity: 'JT-Levent', rank: STYLE === 'custodes' ? 'KEEPSAKE' : 'TECH-ADEPT',
+    cohort: 'FIRST BROTHERHOOD', station: STYLE === 'custodes' ? 'IMPERIAL PALACE · TERRA' : 'RYZA · FORGE WORLD',
+    cipher: 'JT01919561', holdSeconds: 2.6, theme: 'light'
+  }
+  window.__JT_STARTUP__ = cfg
+  window.__JT_STARTUP_DEMO__ = q.get('demo') === '0' ? null : demo()
+  window.__JT_STARTUP_SCRIPT_URL__ = f.js
+  window.__JT_STARTUP_SCORE_URL__ = '../../lib/score.js'
+
+  var link = document.createElement('link')
+  link.rel = 'stylesheet'
+  link.href = f.css
+  document.head.appendChild(link)
+
+  var root = document.createElement('div')
+  root.id = 'jt-startup-root'
+  root.className = f.root + ' jts-boot'
+  document.getElementById('stage').appendChild(root)
+
+  function load (src, then) {
+    var s = document.createElement('script')
+    s.src = src
+    s.onload = then
+    s.onerror = function () { say('✗ 载入失败 ' + src); window.__CAP_ERROR__ = src }
+    document.head.appendChild(s)
+  }
+
+  function shot (t) {
+    var c = root.querySelector('canvas')
+    if (!c) { say('✗ 没有 canvas，抓不到帧 @' + t + 's'); return }
+    try {
+      var url = c.toDataURL('image/png')
+      fetch('/render/save?name=' + encodeURIComponent('cap-' + STYLE + '-' + t.toFixed(1) + 's.png'), { method: 'POST', body: url })
+        .then(function (r) { return r.json() })
+        .then(function (j) { say('✓ ' + t.toFixed(1) + 's → ' + j.path) })
+        .catch(function (e) { say('✗ 上传失败 ' + e) })
+    } catch (e) {
+      /* 跨域污染的 canvas 不允许导出；这里素材全同源，理论上不会发生 */
+      say('✗ toDataURL 失败 @' + t + 's：' + e.message)
+    }
+  }
+
+  function act0 () {
+    say('style=' + STYLE + ' · shots=' + SHOTS.join(',') + 's · press=' + PRESS)
+    var t0 = performance.now()
+    var fired = {}
+    var pressed = false
+    function loop () {
+      var t = (performance.now() - t0) / 1000
+      if (PRESS && !pressed && t >= (Number(q.get('pressat')) || 11.5)) {
+        pressed = true
+        root.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+        document.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+        say('▶ 按住举盾 @' + t.toFixed(1) + 's')
+      }
+      if (pressed && t >= (Number(q.get('releaseat')) || 15.6)) {
+        pressed = false
+        root.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }))
+        document.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }))
+        say('▶ 松手 @' + t.toFixed(1) + 's')
+      }
+      for (var i = 0; i < SHOTS.length; i++) {
+        if (!fired[i] && t >= SHOTS[i]) { fired[i] = 1; shot(SHOTS[i]) }
+      }
+      if (Object.keys(fired).length >= SHOTS.length) {
+        window.__CAP_DONE__ = true
+        say('✓ 全部帧已上传')
+        return
+      }
+      setTimeout(loop, 16)
+    }
+    /* 先等 runtime 自己挂完，再开始计时 */
+    setTimeout(loop, 120)
+  }
+
+  load('../../lib/score.js', function () { load(f.js, act0) })
+</script>
+</body>
+</html>

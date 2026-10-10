@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>启动动画音轨 · 离线渲染台</title>
+<style>
+  body { font: 14px/1.7 ui-monospace, Consolas, monospace; background: #0d0f11; color: #e6e3dd; padding: 26px; max-width: 820px; }
+  h1 { font-size: 17px; margin: 0 0 4px; }
+  p.sub { color: #8a8781; margin: 0 0 18px; font-size: 12px; }
+  .row { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+  label { color: #b9b5ad; }
+  select, input[type=number] { background: #17191b; color: #e6e3dd; border: 1px solid #2c2f33; padding: 4px 8px; font: inherit; }
+  button { background: #d8232a; color: #fff; border: 0; padding: 8px 16px; font: inherit; cursor: pointer; }
+  button.ghost { background: #26292d; color: #ddd; }
+  button:disabled { opacity: .45; cursor: wait; }
+  pre { background: #08090a; border: 1px solid #23262a; padding: 14px; white-space: pre-wrap; word-break: break-word; min-height: 120px; }
+</style>
+</head>
+<body>
+  <h1>启动动画音轨 · 离线渲染台</h1>
+  <p class="sub">跑的是与运行时同一份 score.mjs；OfflineAudioContext 一次性渲出整条片，含旁白与 ducking。</p>
+  <div class="row">
+    <label>风格 <select id="style"><option value="jt">极兔干线</option><option value="w40k">战锤40K</option><option value="custodes">战锤禁军</option></select></label>
+    <label>清单条数 <input id="items" type="number" value="9" min="0" max="40" step="1" style="width:56px"></label>
+    <label>速度 <input id="speed" type="number" value="1" min="0.35" max="3" step="0.05" style="width:70px"></label>
+    <label><input type="checkbox" id="narration" checked> 混入旁白</label>
+    <label><input type="checkbox" id="reduced"> 减弱动效</label>
+    <button id="run">渲染当前风格</button>
+    <button id="both" class="ghost">两套都渲</button>
+  </div>
+  <pre id="log"></pre>
+  <script src="../../lib/score.js"></script>
+  <script type="module">
+    /* 引擎唯一来源：lib/score.js 的全局 JTSCORE —— 运行时、预览、这里读同一份 */
+    const S = window.JTSCORE
+    const createEngine = S.createEngine
+    const PHASE_HOLDS = S.PHASE_HOLDS
+    const ACTION_PHASES = S.ACTION_PHASES
+    const SR = 44100
+    const WAIT = 0.9
+    let VARIANT = null   /* 'warn' | 'unavailable'：只渲该类失败播报 */
+    const el = (id) => document.getElementById(id)
+    const lines = []
+    function log (s) {
+      lines.push(s)
+      el('log').textContent = lines.join('\n')
+      console.log(s)
+    }
+
+    /* 幕起点累加规则必须和 playPiece 完全一致，否则旁白会错拍 */
+    function phaseStarts (style, speed, reduced) {
+      const starts = []
+      let t = 0
+      PHASE_HOLDS[style].forEach((hold, ix) => {
+        starts.push(t)
+        t += hold / speed
+        if (!reduced && ACTION_PHASES[style].includes(ix)) t += WAIT / speed
+      })
+      return { starts, total: t }
+    }
+
+    /* cue → 秒。两种时间线模型共用一套混音代码：
+       phases 按「幕起点 + 幕内偏移」，continuous 按「整片 progress 阈值」，
+       举盾结果这类 on:<event> 的台词挂在事件时刻。 */
+    function cueTime (q, info, speed) {
+      if (info.kind !== 'continuous') return info.starts[q.phase] + q.at / speed
+      if (q.on === 'lock') return info.sec(info.marks.lock) + 0.15
+      if (q.on) return null
+      return q.p * info.total
+    }
+
+    /* 旁白 cue 也取自引擎 —— 与运行时读的是同一张表，不会这边改了那边忘 */
+    async function mixNarration (ctx, eng, style, speed, info) {
+      const bus = ctx.createGain()
+      bus.gain.value = 0.92
+      bus.connect(eng.master)
+      if (speed > (S.VOICE_MAX_SPEED || 1.5)) { log('  speed 超阈值，按运行时规则不播旁白'); return }
+      const cues = (S.NARRATION[style] || []).filter((q) => !q.variant || q.variant === VARIANT)
+      const absent = []
+      let placed = 0
+      for (const q of cues) {
+        const at = cueTime(q, info, speed)
+        if (at == null) continue
+        const resp = await fetch('../../lib/assets/voice/' + style + '/' + q.file + '.wav')
+        if (!resp.ok) { absent.push(q.file); continue }
+        const buf = await ctx.decodeAudioData(await resp.arrayBuffer())
+        const src = ctx.createBufferSource()
+        src.buffer = buf
+        src.connect(bus)
+        src.start(at)
+        eng.duck(at, buf.duration)
+        placed++
+        log('  旁白 ' + style + '/' + q.file + ' @ ' + at.toFixed(2) + 's (' + buf.duration.toFixed(2) + 's)')
+      }
+      log('  已混入 ' + placed + ' 句旁白' + (absent.length ? '（缺失跳过：' + absent.join(', ') + '）' : ''))
+    }
+
+    function encodeWav (buf) {
+      const n = buf.length
+      const chs = buf.numberOfChannels
+      const out = new DataView(new ArrayBuffer(44 + n * chs * 2))
+      const str = (o, s) => { for (let i = 0; i < s.length; i++) out.setUint8(o + i, s.charCodeAt(i)) }
+      str(0, 'RIFF'); out.setUint32(4, 36 + n * chs * 2, true); str(8, 'WAVE')
+      str(12, 'fmt '); out.setUint32(16, 16, true); out.setUint16(20, 1, true); out.setUint16(22, chs, true)
+      out.setUint32(24, buf.sampleRate, true); out.setUint32(28, buf.sampleRate * chs * 2, true)
+      out.setUint16(32, chs * 2, true); out.setUint16(34, 16, true)
+      str(36, 'data'); out.setUint32(40, n * chs * 2, true)
+      const data = []
+      for (let c = 0; c < chs; c++) data.push(buf.getChannelData(c))
+      let o = 44
+      for (let i = 0; i < n; i++) {
+        for (let c = 0; c < chs; c++) {
+          const v = Math.max(-1, Math.min(1, data[c][i]))
+          out.setInt16(o, v < 0 ? v * 0x8000 : v * 0x7fff, true)
+          o += 2
+        }
+      }
+      return out.buffer
+    }
+
+    async function render (style, opts) {
+      const { speed, narration, reduced } = opts
+      const kind = S.TIMELINE_KIND[style] || 'phases'
+      let info
+      if (kind === 'continuous') {
+        info = S.planContinuous(style, { speed, items: Number(el('items').value) || 9, vigil: 3.2 })
+      } else {
+        const ps = phaseStarts(style, speed, reduced)
+        info = { kind: 'phases', starts: ps.starts, total: ps.total }
+      }
+      const total = info.total
+      const len = Math.ceil(SR * (total + 1.6))
+      log('▸ ' + style + ' [' + kind + '] @ ' + speed + '× ' + (reduced ? '[减弱动效] ' : '') + (narration ? '[含旁白]' : '[纯音轨]') +
+        ' · 片长 ' + total.toFixed(1) + 's' + (info.onStage != null ? ' · 上镜 ' + info.onStage + ' 位（溢出 ' + info.overflow + '）' : ''))
+      const ctx = new OfflineAudioContext(2, len, SR)
+      const eng = createEngine(ctx, style)
+      eng.start(0, 0.85)
+      if (kind === 'continuous') {
+        S.simulateContinuous(eng, info)
+      } else {
+        PHASE_HOLDS[style].forEach((hold, ix) => eng.playPhase(ix, info.starts[ix], hold / speed, reduced))
+        eng.fadeOut(total - 1.1, 1.1)
+      }
+      const end = total
+      if (narration) await mixNarration(ctx, eng, style, speed, info)
+      const buf = await ctx.startRendering()
+      let peak = 0, clipped = 0
+      for (let c = 0; c < buf.numberOfChannels; c++) {
+        const d = buf.getChannelData(c)
+        for (let i = 0; i < d.length; i++) { const a = Math.abs(d[i]); if (a > peak) peak = a; if (a >= 0.999) clipped++ }
+      }
+      const name = style + '-' + speed + 'x' + (reduced ? '-reduced' : '') + (narration ? '' : '-instrumental') + (VARIANT ? '-' + VARIANT : '') + '.wav'
+      const res = await fetch('/render/save?name=' + encodeURIComponent(name), { method: 'POST', body: encodeWav(buf) })
+      const j = await res.json()
+      log('  峰值 ' + (20 * Math.log10(Math.max(1e-6, peak))).toFixed(1) + ' dBFS · 削顶样本 ' + clipped +
+        ' · 渲染到 ' + end.toFixed(1) + 's → ' + j.path)
+      return name
+    }
+
+    async function run (only) {
+      const btns = [el('run'), el('both')]
+      btns.forEach((b) => { b.disabled = true })
+      const opts = {
+        speed: Number(el('speed').value) || 1,
+        narration: el('narration').checked,
+        reduced: el('reduced').checked
+      }
+      try {
+        if (only && only !== 'all') await render(only, opts)
+        /* 风格清单从引擎取，加一套风格不用再回来改这里 */
+        else for (const s of Object.keys(S.TIMELINE_KIND)) await render(s, opts)
+        window.__RENDER_DONE__ = true
+        log('✓ 完成。文件在 tools/audio/out/ 下。')
+      } catch (err) {
+        window.__RENDER_ERROR__ = String(err && err.message || err)
+        log('✗ ' + (err && err.stack || err))
+      }
+      btns.forEach((b) => { b.disabled = false })
+      window.__RENDER_DONE__ = true
+    }
+
+    window.__RENDER_DONE__ = false
+    el('run').onclick = () => { window.__RENDER_DONE__ = false; run(el('style').value) }
+    el('both').onclick = () => { window.__RENDER_DONE__ = false; run(null) }
+    /* 供自动化直接触发：#auto=both&speed=1&narr=0&reduced=1&variant=warn */
+    const q = new URLSearchParams(location.hash.slice(1))
+    if (q.has('auto')) {
+      if (q.get('narr') === '0') el('narration').checked = false
+      if (q.get('reduced') === '1') el('reduced').checked = true
+      if (q.get('speed')) el('speed').value = q.get('speed')
+      VARIANT = q.get('variant') || null
+      run(q.get('auto') === 'both' ? null : q.get('auto'))
+    }
+  </script>
+</body>
+</html>
